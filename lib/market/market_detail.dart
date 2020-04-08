@@ -167,12 +167,11 @@ class _MarketDetailState extends State<MarketDetail> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF131e30),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(title, style: TextStyle(fontSize: 18,color: Colors.white),),
-        backgroundColor: Color(0xFF131e30),
+        backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0.1,
-      brightness: Brightness.dark,
       leading: new IconButton(
           icon: new Image.asset('images/left_w.jpg',
               width: 11, height: 20),

@@ -6,7 +6,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/taurus_footer.dart';
 import 'package:flutter_easyrefresh/taurus_header.dart';
 import 'package:flustars/flustars.dart';
-import 'package:futures/article/video_detail.dart';
+import 'package:futures/choice/video_detail.dart';
 import 'package:flutter/cupertino.dart';
 
 
@@ -99,21 +99,18 @@ class VideoListState extends State<VideoList> {
   Widget build(BuildContext context) {
 
     if(list.isNotEmpty) {
-
       return Scaffold(
         appBar: AppBar(
-          title: Text(name,style: TextStyle(color: Colors.black87,fontSize: 18),),
-          backgroundColor: Colors.white,
+          title: Text(name,style: TextStyle(fontSize: 18),),
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.1,
-          
           leading: new IconButton(
             icon: new Image.asset('images/left.jpg',
                 width: 11, height: 20),
-                
-          
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
+        backgroundColor: Theme.of(context).backgroundColor,
         body: EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
@@ -126,7 +123,7 @@ class VideoListState extends State<VideoList> {
               delegate: SliverChildBuilderDelegate(
                   (context, i) {
                         return GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
@@ -134,8 +131,8 @@ class VideoListState extends State<VideoList> {
                               }));
                           },
                           child: Container(
-                            color: Colors.white,
-                            margin:EdgeInsets.only(bottom:10),
+                            color: Theme.of(context).cardColor,
+                            margin:EdgeInsets.only(bottom:1),
                             padding: EdgeInsets.all(10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

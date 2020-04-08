@@ -145,7 +145,7 @@ class VideoDetailState extends State<VideoDetail> {
 
 
 
-  buildComments() {
+  buildComments(parent) {
     if (comments.isEmpty) {
       return Container(
         child: Center(
@@ -157,7 +157,7 @@ class VideoDetailState extends State<VideoDetail> {
     List<Widget> list = [];
     comments.forEach((val) {
       list.add( GestureDetector(
-  behavior: HitTestBehavior.opaque,
+        behavior: HitTestBehavior.opaque,
         onTap: (){
            showCupertinoModalPopup(
               context: context,
@@ -166,9 +166,9 @@ class VideoDetailState extends State<VideoDetail> {
                     CupertinoActionSheetAction(
                       child: const Text('举报'),
                       onPressed: () {
-                        Navigator.of(context, rootNavigator: true).push(
+                        Navigator.of(parent, rootNavigator: true).push(
                             new MaterialPageRoute(
-                                builder: (BuildContext context) {
+                                builder: (BuildContext parent) {
                           return new Complaint();
                         }));
                         Navigator.pop(context);
@@ -204,9 +204,9 @@ class VideoDetailState extends State<VideoDetail> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(val["nick"],style: TextStyle(color: Colors.black87,fontSize: 12,fontWeight: FontWeight.w700),),
+                        Text(val["nick"],style: TextStyle(fontSize: 12,fontWeight: FontWeight.w700),),
                         Padding(padding: EdgeInsets.only(top: 5),),
-                        Text(val["text"].replaceAll('<div>', '').replaceAll('</div>', ''), style: TextStyle(color: Colors.black87,fontSize: 13)),
+                        Text(val["text"].replaceAll('<div>', '').replaceAll('</div>', ''), style: TextStyle(fontSize: 13)),
                         Padding(padding: EdgeInsets.only(top: 5),),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -260,31 +260,26 @@ class VideoDetailState extends State<VideoDetail> {
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
         appBar: AppBar(
-          title: Text('视频播放',style: TextStyle(color: Colors.black87,fontSize: 18),),
-          backgroundColor: Colors.white,
+          title: Text('视频播放',style: TextStyle(fontSize: 18),),
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.1,
-          
           leading: new IconButton(
             icon: new Image.asset('images/left.jpg',
                 width: 11, height: 20),
-                
-          
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: detail!= null ? Stack(
           children: <Widget>[
-            
-          
             ListView(
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(top:MediaQuery.of(context).size.width * 9 /16),
                   padding: EdgeInsets.all(10),
+                  color: Theme.of(context).cardColor,
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -317,9 +312,10 @@ class VideoDetailState extends State<VideoDetail> {
                               width: 56,
                               height: 24,
                               alignment: Alignment.center,
+                              margin: EdgeInsets.only(left:10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                                color: Theme.of(context).primaryColor
+                                color: Theme.of(context).primaryColor,
                               ),
                               child: Text('＋关注',style: TextStyle(color: Colors.white,fontSize: 12,fontWeight: FontWeight.w700),),
                             )
@@ -381,7 +377,7 @@ class VideoDetailState extends State<VideoDetail> {
                     ],
                   )
                 ),
-                Divider(height: 5,color: Colors.grey[300],),
+                Divider(height: 5,color: Theme.of(context).dividerColor,),
                 Container(
                   padding: EdgeInsets.all(10),
                   child: Column(
@@ -404,7 +400,7 @@ class VideoDetailState extends State<VideoDetail> {
                       Padding(padding: EdgeInsets.only(top:5),),
                       Text(
                         detail["introduction"],
-                        style: TextStyle(color: Colors.black54,fontSize: 13),
+                        style: TextStyle(fontSize: 13),
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -434,7 +430,7 @@ class VideoDetailState extends State<VideoDetail> {
                     ],
                   ),
                 ),
-                buildComments(),
+                buildComments(context),
                 Container(height: 70,)
               ],
             ) ,
@@ -458,7 +454,7 @@ class VideoDetailState extends State<VideoDetail> {
                       width: MediaQuery.of(context).size.width,
                       alignment: Alignment.center,
                       decoration: new BoxDecoration(
-                          color: Colors.white, //设置子控件背后的装饰
+                          color: Theme.of(context).cardColor, //设置子控件背后的装饰
                           border: Border(
                               top: BorderSide(
                             color: Colors.grey,
@@ -477,7 +473,7 @@ class VideoDetailState extends State<VideoDetail> {
                               textAlign: TextAlign.start, //文本对齐方式
                               style: TextStyle(
                                   fontSize: 14.0,
-                                  color: Colors.black87), //输入文本的样式
+                                  ), //输入文本的样式
                               // inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],//允许的输入格式
                               onChanged: (text) {
                                 //内容改变的回调
@@ -515,9 +511,9 @@ class VideoDetailState extends State<VideoDetail> {
                               // enabled: true,
                               decoration: InputDecoration(
                                 hintText: '说点什么吧...',
-                                hintStyle: TextStyle(color: Colors.black54),
+                                hintStyle: TextStyle(),
                                 border: InputBorder.none,
-                                fillColor: Colors.grey[100],
+                                fillColor: Theme.of(context).dividerColor,
                                 filled: true,
                                 contentPadding:
                                     const EdgeInsets.fromLTRB(10, 0, 10, 5),

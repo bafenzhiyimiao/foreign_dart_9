@@ -17,31 +17,9 @@ class _About extends State<Search> with SingleTickerProviderStateMixin{
 
     var list = [];
 
-
-  Future<void> onRefreshing() async {
-    list.clear();
-    // var time = new DateTime.now().millisecondsSinceEpoch.;
-    try {
-      Response response = await Dio().get(
-          "https://tt3.anrunjf.com/order/variety/getVariety.do?_=1583306904853");
-    
-      if (mounted) {
-        var res = jsonDecode(response.data);
-        setState(() {
-          list.addAll(res);
-        });
-      }
-
-    } catch (e) {
-      print(e);
-    }
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
-    onRefreshing();
   }
 
 

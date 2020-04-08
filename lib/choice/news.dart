@@ -6,7 +6,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/taurus_footer.dart';
 import 'package:flutter_easyrefresh/taurus_header.dart';
 import 'package:flustars/flustars.dart';
-import 'package:futures/article/news_detail.dart';
+import 'package:futures/news/news_detail.dart';
 import 'package:flutter/cupertino.dart';
 
 
@@ -70,6 +70,7 @@ class NewsListState extends State<NewsList> {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         body: newsList.isNotEmpty ?  EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
@@ -82,7 +83,7 @@ class NewsListState extends State<NewsList> {
               delegate: SliverChildBuilderDelegate(
                   (context, i) {
                         return GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {

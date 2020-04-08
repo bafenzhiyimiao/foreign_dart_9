@@ -58,8 +58,8 @@ class NewsDetailState extends State<NewsDetail> {
 
     return new Scaffold(
         appBar: AppBar(
-          title: Text('',style: TextStyle(color: Colors.black87),),
-          backgroundColor: Colors.white,
+          title: Text('',),
+          backgroundColor: Theme.of(context).backgroundColor,
           elevation: 0.1,
           
           leading: new IconButton(
@@ -70,7 +70,7 @@ class NewsDetailState extends State<NewsDetail> {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: detail != null ? ListView(
           padding: EdgeInsets.only(left:10,right:10),
           children: <Widget>[

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
-import 'package:futures/article/news_detail.dart';
+import 'package:futures/news/news_detail.dart';
 import 'package:flutter/cupertino.dart';
 
 
@@ -71,10 +71,9 @@ class NewsState extends State<News> {
 
   @override
   Widget build(BuildContext context) {
-
     if(newsList.isNotEmpty) {
-
       return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         body: EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
@@ -87,7 +86,7 @@ class NewsState extends State<News> {
               delegate: SliverChildBuilderDelegate(
                   (context, i) {
                         return GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
@@ -96,10 +95,10 @@ class NewsState extends State<News> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).cardColor,
                               border: Border(
                                 bottom: BorderSide(
-                                  color: Colors.grey[200],
+                                  color: Theme.of(context).dividerColor,
                                   style: BorderStyle.solid,
                                   width: 0.4,
                                 )

@@ -43,16 +43,15 @@ class SearchReslutState extends State<SearchReslut> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).cardColor,
             title: Container(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               child: TabBar(
                   indicator: null,
                   indicatorWeight: 0.01,
                   isScrollable: true,
                   unselectedLabelColor : Colors.grey,
                   unselectedLabelStyle: TextStyle(fontSize: 14),
-                  labelColor:Colors.black87,
                   labelStyle: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
                   controller: controller,
                   tabs:tabs,
@@ -68,6 +67,7 @@ class SearchReslutState extends State<SearchReslut> with SingleTickerProviderSta
               onPressed: () => Navigator.of(context).pop(),
             ),
       ),
+      backgroundColor: Theme.of(context).backgroundColor,
       body:  TabBarView(
         controller: controller,
         children: <Widget>[

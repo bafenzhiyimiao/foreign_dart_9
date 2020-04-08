@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:futures/article/video.dart';
-import 'package:futures/article/news.dart';
-import 'package:futures/article/calender.dart';
-import 'package:futures/article/seven.dart';
+import 'package:futures/choice/video.dart';
+import 'package:futures/choice/news.dart';
+import 'package:futures/choice/seven.dart';
 // import 'package:taurus/header.dart';
 
-class ArticleScreen extends StatefulWidget {
+class ChoiceScreen extends StatefulWidget {
   @override
-  ArticleScreenState createState() => ArticleScreenState();
+  _ChoiceScreen createState() => _ChoiceScreen();
 }
 
 
-class ArticleScreenState extends State<ArticleScreen> with SingleTickerProviderStateMixin{
+class _ChoiceScreen extends State<ChoiceScreen> with SingleTickerProviderStateMixin{
   TabController _tabCon;
 
   @override
@@ -29,20 +28,20 @@ class ArticleScreenState extends State<ArticleScreen> with SingleTickerProviderS
     TextEditingController controller = TextEditingController();
 
     return new Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).cardColor,
           
           centerTitle:false,
           elevation: 0.1,
           title: Container(
-            color: Colors.white,
             child: TabBar(
               indicator: null,
               indicatorWeight: 0.01,
               isScrollable: true,
               unselectedLabelColor : Colors.grey,
               unselectedLabelStyle: TextStyle(fontSize: 16),
-              labelColor:Colors.black87,
+              // labelColor:Colors.black87,
               labelStyle: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
               controller: _tabCon,
               tabs:[
@@ -61,7 +60,7 @@ class ArticleScreenState extends State<ArticleScreen> with SingleTickerProviderS
                   VideoScreen(),
                   SevenScreen(),
                   NewsList(),
-                  // CalenderScreen(),
+                  // DiaryScreen(),
                   // VideoList(),
                 ]
               )

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:futures/article/news_detail.dart';
+import 'package:futures/news/news_detail.dart';
 import 'package:futures/news/news_screen.dart';
-import 'package:futures/article/calender.dart';
+import 'package:futures/choice/diary.dart';
 import 'package:futures/dashboard/school.dart';
 import 'package:futures/dashboard/hot.dart';
-import 'package:futures/article/video_list.dart';
+import 'package:futures/choice/video_list.dart';
 import 'package:futures/dashboard/search.dart';
 import 'package:dio/dio.dart';
 
@@ -445,7 +445,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                           onTap: () {
                             Navigator.of(context,rootNavigator: true).push(
                               new MaterialPageRoute(builder: (BuildContext context) {
-                              return  new CalenderScreen();
+                              return  new DiaryScreen();
                             }));
                           },
                           child:Container(

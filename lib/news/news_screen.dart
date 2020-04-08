@@ -40,16 +40,14 @@ class NewsScreenState extends State<NewsScreen> with SingleTickerProviderStateMi
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Text('新闻资讯',style: TextStyle(color: Colors.black87,fontSize: 18),),
+            backgroundColor: Theme.of(context).cardColor,
+            title: Text('新闻资讯',style: TextStyle(fontSize: 18),),
             elevation: 0.1,
-            
             leading: new IconButton(
               icon: new Image.asset('images/left.jpg',
               width: 11, height: 20),
-              
-              
               onPressed: () => Navigator.of(context).pop(),
             ),
             bottom: TabBar(
@@ -58,7 +56,6 @@ class NewsScreenState extends State<NewsScreen> with SingleTickerProviderStateMi
                 isScrollable: true,
                 unselectedLabelColor : Colors.grey,
                 unselectedLabelStyle: TextStyle(fontSize: 14),
-                labelColor:Colors.black87,
                 labelStyle: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
                 controller: controller,
                 tabs:tabs,

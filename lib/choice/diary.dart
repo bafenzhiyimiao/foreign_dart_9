@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_custom_calendar/flutter_custom_calendar.dart';
 
-class CalenderScreen extends StatefulWidget {
-  CalenderScreen({Key key, this.title}) : super(key: key);
+class DiaryScreen extends StatefulWidget {
+  DiaryScreen({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _CalenderScreenState createState() => _CalenderScreenState();
+  _DiaryScreen createState() => _DiaryScreen();
 }
 
-class _CalenderScreenState extends State<CalenderScreen> {
+class _DiaryScreen extends State<DiaryScreen> {
   ValueNotifier<String> text;
   ValueNotifier<String> selectText;
 
@@ -93,7 +93,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
       row.add(
         Container(
           padding: EdgeInsets.all(10),
-          color: Colors.white,
+          color: Theme.of(context).backgroundColor,
           child: Row(
             children: <Widget>[
               Text(
@@ -151,15 +151,12 @@ class _CalenderScreenState extends State<CalenderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('财经日历',style: TextStyle(color: Colors.black87,fontSize: 18),),
-        backgroundColor: Colors.white,
+        title: Text('财经日历',style: TextStyle(fontSize: 18),),
+        backgroundColor: Theme.of(context).cardColor,
         elevation: 0.1,
-        
         leading: new IconButton(
           icon: new Image.asset('images/left.jpg',
               width: 11, height: 20),
-              
-          
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

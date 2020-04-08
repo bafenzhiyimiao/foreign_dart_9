@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:futures/article/video_detail.dart';
+import 'package:futures/choice/video_detail.dart';
 import 'package:flutter/cupertino.dart';
 
 

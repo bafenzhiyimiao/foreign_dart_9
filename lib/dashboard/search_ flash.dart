@@ -94,6 +94,7 @@ class SearchFlashState extends State<SearchFlash> {
     if(list.isNotEmpty) {
 
       return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         body: EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
@@ -109,8 +110,8 @@ class SearchFlashState extends State<SearchFlash> {
                       return Container(height: 0,);
                     }
                         return Container(
-                            color: Colors.white,
-                            margin:EdgeInsets.only(bottom:10),
+                            color: Theme.of(context).cardColor,
+                            margin:EdgeInsets.only(bottom:1),
                             padding: EdgeInsets.all(10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,10 +125,10 @@ class SearchFlashState extends State<SearchFlash> {
                                         data:list.isNotEmpty != null  && list[i]["data"]["content"] != null ? list[i]["data"]["content"].replaceAll('金十', '期货') : '',
                                         defaultTextStyle: TextStyle(
                                           fontFamily: 'serif',
-                                          color:list[i]["important"] == 1 ? Colors.red[300]: Colors.black87,
+                                          // color:list[i]["important"] == 1 ? Colors.red[300]: Colors.black87,
                                           fontSize: 13
                                         ),
-                                        backgroundColor: Colors.white,
+                                        // backgroundColor: Colors.white,
                                       ),
                                       Padding(padding: EdgeInsets.only(top:10),),
                                       Container(

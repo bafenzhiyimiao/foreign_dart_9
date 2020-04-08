@@ -73,10 +73,10 @@ class _Complaint extends State<Complaint> {
     Widget build(BuildContext context) {
       return
        Scaffold(
-         backgroundColor: Colors.white,
+         backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.1,
           
           leading: new IconButton(
@@ -97,7 +97,7 @@ class _Complaint extends State<Complaint> {
             child: 
             
          Container(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(15),
@@ -110,7 +110,7 @@ class _Complaint extends State<Complaint> {
                   maxLines: 6,//最大行数
                   // autocorrect: true,//是否自动更正
                   // autofocus: true,//是否自动对焦
-                  style: TextStyle(fontSize: 14.0, color: Colors.black87),//输入文本的样式
+                  style: TextStyle(fontSize: 14.0, color: Colors.grey),//输入文本的样式
                   // inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],//允许的输入格式
                   onChanged: (text) {//内容改变的回调
                     // print('change $text');
@@ -122,7 +122,7 @@ class _Complaint extends State<Complaint> {
                     hintText: '请输入举报内容',
                     hintStyle: TextStyle(color: Colors.grey),
                     border: InputBorder.none,
-                    fillColor: Colors.grey[100],
+                    fillColor: Theme.of(context).backgroundColor,
                     filled: true,
                   ),//是否禁用
                 ),

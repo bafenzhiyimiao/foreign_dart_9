@@ -108,6 +108,7 @@ class _MyPageState extends State<MyPage> {
   Widget userImage = (image != null && login == true )? Container(
     padding: const EdgeInsets.only(top: 28.0, right: 18.0, left: 25.0),
     decoration: BoxDecoration(
+      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.all(Radius.circular(5))
     ),
     child:  Image.memory(image,
@@ -128,7 +129,7 @@ class _MyPageState extends State<MyPage> {
         });
     Widget buildRow(icon, title, isEnd, click) {
       return GestureDetector(
-  behavior: HitTestBehavior.opaque,
+        behavior: HitTestBehavior.opaque,
         onTap: () {
           click();
         },
@@ -150,7 +151,7 @@ class _MyPageState extends State<MyPage> {
                       ? BoxDecoration(
                           border: Border(
                               bottom:
-                                  BorderSide(color: Color(0xffd9d9d9), width: .3)))
+                                  BorderSide(color: Theme.of(context).dividerColor, width: .3)))
                       : null,
                   padding: EdgeInsets.only(top: 16.0),
                   child: Row(
@@ -181,16 +182,17 @@ class _MyPageState extends State<MyPage> {
       );
     }
 
-    return Stack(
+    return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
+      body: Stack(
       children: <Widget>[
         ListView(
           children: <Widget>[
             Container(
               height: 180.0,
+              color: Theme.of(context).cardColor,
               child:
                RawMaterialButton(
-                
-                
                 onPressed: () {
                   if(login) {
                     Navigator.of(context,rootNavigator: true).push(
@@ -262,22 +264,26 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                  color: Colors.grey[100],
-                  height: 10.0,
-                ),
-                buildRow('images/m1.png', '我的消息', true, notice),
-              ],
-            ),
             Container(
+              color: Theme.of(context).cardColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Container(
-                    color: Colors.grey[100],
+                    color: Theme.of(context).backgroundColor,
+                    height: 10.0,
+                  ),
+                  buildRow('images/m1.png', '我的消息', true, notice),
+                ],
+              )
+            ),
+            Container(
+              color: Theme.of(context).cardColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    color: Theme.of(context).backgroundColor,
                     height: 10.0,
                   ),
                   buildRow('images/m2.png', '收藏', false,collect),
@@ -287,19 +293,24 @@ class _MyPageState extends State<MyPage> {
                 ],
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                  color: Colors.grey[100],
-                  height: 10.0,
-                ),
-                buildRow('images/m6.png', '设置', true,setting),
-              ],
-            ),
+            Container(
+              color: Theme.of(context).cardColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    color: Theme.of(context).backgroundColor,
+                    height: 10.0,
+                  ),
+                  buildRow('images/m6.png', '设置', true,setting),
+                ],
+              ),
+            )
+            
           ],
         )
       ],
+    )
     );
   }
 }

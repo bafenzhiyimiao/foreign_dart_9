@@ -26,19 +26,18 @@ class MarketScreenState extends State<MarketScreen> with SingleTickerProviderSta
 
     return new Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.1,
           
           centerTitle:false,
           title: Container(
-            color: Colors.white,
             child: TabBar(
                 indicator: null,
                 indicatorWeight: 0.01,
                 isScrollable: true,
                 unselectedLabelColor : Colors.grey,
                 unselectedLabelStyle: TextStyle(fontSize: 16),
-                labelColor:Colors.black87,
+                // labelColor:Colors.black87,
                 labelStyle: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
                 controller: _tabCon,
                 tabs:[
@@ -49,6 +48,7 @@ class MarketScreenState extends State<MarketScreen> with SingleTickerProviderSta
           )
           
     ),
+    backgroundColor: Theme.of(context).backgroundColor,
         body:TabBarView(
                 controller: _tabCon,
                 children: <Widget>[

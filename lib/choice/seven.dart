@@ -88,7 +88,7 @@ class SevenScreenState extends State<SevenScreen> {
     if(list.isNotEmpty) {
 
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
@@ -127,7 +127,7 @@ class SevenScreenState extends State<SevenScreen> {
                                   margin: EdgeInsets.fromLTRB(25,0,10,0),
                                   padding: EdgeInsets.only(top: 10,bottom: 10),
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: Theme.of(context).backgroundColor,
                                       border: Border(
                                         left: BorderSide(
                                           color: Colors.blue[100],
@@ -174,7 +174,7 @@ class SevenScreenState extends State<SevenScreen> {
                                   top: 17,
 
                                   child: Container(
-                                    color: Colors.white,
+                                    color: Theme.of(context).backgroundColor,
                                     child: Image(
                                       width: 6,
                                       height: 6,
@@ -190,7 +190,7 @@ class SevenScreenState extends State<SevenScreen> {
                                 padding: EdgeInsets.only(left: 20,top: 10,bottom: 10,right: 10),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Theme.of(context).backgroundColor,
                                   border: Border(
                                     left: BorderSide(
                                       color: Colors.blue[100],
@@ -206,10 +206,9 @@ class SevenScreenState extends State<SevenScreen> {
                                       data:list.isNotEmpty != null  && list[i]["data"]["content"] != null ? list[i]["data"]["content"].replaceAll('金十', '期货') : '',
                                       defaultTextStyle: TextStyle(
                                         fontFamily: 'serif',
-                                        color:list[i]["important"] == 1 ? Colors.red[300]: Colors.black87,
                                         fontSize: 13
                                       ),
-                                      backgroundColor: Colors.white,
+                                      backgroundColor: Theme.of(context).backgroundColor,
                                     ),
                                     list[i]["data"]["pic"] != '' ? Image(
                                       image: NetworkImage(list[i]["data"]["pic"] ),

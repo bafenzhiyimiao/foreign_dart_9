@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:futures/article/article.dart';
+import 'package:futures/choice/choice.dart';
 import 'package:futures/market/market.dart';
 import 'package:futures/dashboard/dashboard.dart';
 import 'package:futures/my/my.dart';
@@ -122,7 +122,7 @@ Image getTabIcon(int curIndex) {//设置tabbar选中和未选中的状态图标
                         return MarketScreen(); 
                         break; 
                       case 2: 
-                        return ArticleScreen(); 
+                        return ChoiceScreen(); 
                         break; 
                       case 3: 
                         return MyPage(); 

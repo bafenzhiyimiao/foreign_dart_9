@@ -26,22 +26,24 @@ class MarketListState extends State<MarketList> {
 
 
   Future<void> onRefreshing() async {
-    // list.clear();
-    // list2.clear();
-    // var time = new DateTime.now().millisecondsSinceEpoch.;
-    print(channelid);
     try {
-      Response response = await Dio().get(
-          "https://tt3.anrunjf.com/order/variety/getVariety.do?_=1583306904853");
-      Response res = await Dio().get(
-          "https://tt3.anrunjf.com/quota/quota/getAllNewlyQuotaData.do?_=1583306904853");
-      if (mounted) {
-        var res1 = jsonDecode(response.data);
-        var res2 = jsonDecode(res.data);
+     
+      Map<String, dynamic> httpHeaders = {
+          'X-LC-Id': 'XAA6xGk2UEfmqnwo73HQxYEG-MdYXbMMI',
+          'X-LC-Key': '7KKIT3yOUkzDOhc5qnTx3Fly',
+        };
+        Options options = Options(headers:httpHeaders);
+        Response response = await Dio().get(
+            "https://xaa6xgk2.api.lncldglobal.com/1.1/classes/quota/5e8d4286c82f9c00080ac71e",
+            options: options
+        );
+      
+        var res1 = response.data;
+
         var arr = [];
         var arr2 = [];
-        var namelist = res1["data"];
-        var quotalist = res2["data"];
+        var namelist = res1["name"];
+        var quotalist = res1["quota"];
         arr.addAll(namelist.where((val) => val["isDomestic"] == channelid));
 
 
@@ -53,8 +55,6 @@ class MarketListState extends State<MarketList> {
           list = arr;
           list2 = arr2;
         });
-      }
-
     } catch (e) {
       print(e);
     }
@@ -65,7 +65,7 @@ class MarketListState extends State<MarketList> {
   void initState() {
     super.initState();
     onRefreshing();
-    getlist();
+    // getlist();
   }
 
 
@@ -96,6 +96,7 @@ class MarketListState extends State<MarketList> {
   Widget build(BuildContext context) {
     if(list.isNotEmpty) {
       return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         body: new ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: 
@@ -116,7 +117,7 @@ class MarketListState extends State<MarketList> {
                                 i == 0 ? Container(
                                   margin: EdgeInsets.only(bottom: 10),
                                   child:Container(
-                                    color: Colors.grey[100],
+                                    color: Theme.of(context).dividerColor,
                                     padding: EdgeInsets.all(10),
                                     child: Row(
                                     children: <Widget>[

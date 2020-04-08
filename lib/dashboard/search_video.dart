@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:futures/article/video_detail.dart';
+import 'package:futures/choice/video_detail.dart';
 import 'package:flutter/cupertino.dart';
 
 
@@ -92,6 +92,7 @@ class SearchVideoState extends State<SearchVideo> {
     if(list.isNotEmpty) {
 
       return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         body: EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
@@ -107,7 +108,7 @@ class SearchVideoState extends State<SearchVideo> {
                       return  Container(height: 0,);
                     }
                         return GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
@@ -115,8 +116,8 @@ class SearchVideoState extends State<SearchVideo> {
                               }));
                           },
                           child: Container(
-                            color: Colors.white,
-                            margin:EdgeInsets.only(bottom:10),
+                            color: Theme.of(context).cardColor,
+                            margin:EdgeInsets.only(bottom:1),
                             padding: EdgeInsets.all(10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

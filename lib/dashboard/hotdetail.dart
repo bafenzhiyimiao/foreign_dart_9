@@ -72,14 +72,11 @@ class HotDetailState extends State<HotDetail> {
     return new Scaffold(
         appBar: AppBar(
           title: Text('',style: TextStyle(color: Colors.black87,fontSize: 18),),
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.1,
-          
           leading: new IconButton(
             icon: new Image.asset('images/left.jpg',
                 width: 11, height: 20),
-                
-          
             onPressed: () => Navigator.of(context).pop(),
           ),
           actions: <Widget>[
@@ -87,7 +84,7 @@ class HotDetailState extends State<HotDetail> {
               padding: EdgeInsets.only(right: 15),
               child: Center(
                 child: !iscollect ? GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       LocalStorage.getJSON('collect').then((val){
                         if(val == null) {
@@ -114,7 +111,7 @@ class HotDetailState extends State<HotDetail> {
                       ),
                     )
                   ) : GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       LocalStorage.getJSON('collect').then((val){
                         var arr = [];
@@ -146,7 +143,7 @@ class HotDetailState extends State<HotDetail> {
             )
           ],
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: detail != null ? ListView(
           padding: EdgeInsets.only(left:10,right:10),
           children: <Widget>[
@@ -188,9 +185,8 @@ class HotDetailState extends State<HotDetail> {
                 """,
               defaultTextStyle: TextStyle(
                 fontFamily: 'serif',
-                color: Colors.black87
               ),
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).backgroundColor,
                customTextStyle:
                     (dom.Node node, TextStyle baseStyle) {
                   if (node is dom.Element) {

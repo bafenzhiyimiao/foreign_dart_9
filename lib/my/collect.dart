@@ -45,10 +45,10 @@ class CollectListState extends State<CollectList> {
   Widget build(BuildContext context) {
 
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text('我的收藏',style: TextStyle(color: Colors.black87,fontSize: 18),),
-          backgroundColor: Colors.transparent,
+          title: Text('我的收藏'),
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.0,
           
           leading: new IconButton(
@@ -70,7 +70,7 @@ class CollectListState extends State<CollectList> {
               delegate: SliverChildBuilderDelegate(
                   (context, i) {
                         return GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
@@ -83,10 +83,10 @@ class CollectListState extends State<CollectList> {
                                 padding: EdgeInsets.all(10),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Theme.of(context).cardColor,
                                   border: Border(
                                     bottom: BorderSide(
-                                      color: Colors.grey[100],
+                                      color: Theme.of(context).dividerColor,
                                       style: BorderStyle.solid,
                                       width: 1,
                                     )

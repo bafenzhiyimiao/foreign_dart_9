@@ -89,10 +89,9 @@ class _SettingScreenState extends State<SettingScreen> {
     }
     return new Scaffold(
       appBar: AppBar(
-        title: Text('设置',style: TextStyle(color: Colors.black87,fontSize: 18),),
-        backgroundColor: Colors.white,
+        title: Text('设置'),
+        backgroundColor: Theme.of(context).cardColor,
         elevation: 0.1,
-        
         leading: new IconButton(
           icon: new Image.asset('images/left.jpg',
               width: 11, height: 20),
@@ -101,6 +100,7 @@ class _SettingScreenState extends State<SettingScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         ),
+        backgroundColor: Theme.of(context).cardColor,
       body: new SingleChildScrollView(
         child: new Container(
           child: new Column(

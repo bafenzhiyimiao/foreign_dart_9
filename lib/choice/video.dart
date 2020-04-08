@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/taurus_footer.dart';
-import 'package:futures/article/video_detail.dart';
+import 'package:futures/choice/video_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:futures/article/video_list.dart';
+import 'package:futures/choice/video_list.dart';
 
 
 
@@ -79,11 +79,9 @@ class VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     if(list.isNotEmpty) {
-
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: EasyRefresh.custom(
           onRefresh: () async {
           },

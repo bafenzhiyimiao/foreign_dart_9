@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:futures/article/video_detail.dart';
-import 'package:futures/article/video_list.dart';
+import 'package:futures/choice/video_detail.dart';
+import 'package:futures/choice/video_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:futures/global.dart';
 
@@ -41,9 +41,10 @@ class FollowListState extends State<FollowList> {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text('我的关注',style: TextStyle(color: Colors.black87,fontSize: 18),),
-          backgroundColor: Colors.white,
+          title: Text('我的关注'),
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.1,
           
           leading: new IconButton(
