@@ -167,7 +167,7 @@ class HomepageScreenState extends State<HomepageScreen> {
               Expanded(
                 flex: 2,
                 child: Text(
-                  val["publish_time"].substring(0,11),
+                  val["updated_at"].substring(0,11),
                   style: TextStyle(fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
@@ -200,7 +200,7 @@ class HomepageScreenState extends State<HomepageScreen> {
             child: Row(
               children: <Widget>[
                 Image(
-                  image: AssetImage('assets/name.jpg'),
+                  image: AssetImage('assets/home_name.jpg'),
                   width: 80,
                   fit: BoxFit.fitWidth,
                 ),

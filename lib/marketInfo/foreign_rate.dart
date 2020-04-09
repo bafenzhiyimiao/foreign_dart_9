@@ -332,6 +332,7 @@ class ForeignScreenState extends State<ForeignScreen> {
       );
     }else {
       return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
