@@ -46,7 +46,7 @@ class NewsScreenState extends State<NewsScreen> with SingleTickerProviderStateMi
             title: Text('新闻资讯',style: TextStyle(fontSize: 18),),
             elevation: 0.1,
             leading: new IconButton(
-              icon: new Image.asset('images/left.jpg',
+              icon: new Image.asset('assets/left.jpg',
               width: 11, height: 20),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -64,11 +64,11 @@ class NewsScreenState extends State<NewsScreen> with SingleTickerProviderStateMi
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          News(catid: '14',),
-          News(catid: '16',),
-          News(catid: '10',),
-          News(catid: '12',),
-          News(catid: '11',),
+          NewsList(catid: '14',),
+          NewsList(catid: '16',),
+          NewsList(catid: '10',),
+          NewsList(catid: '12',),
+          NewsList(catid: '11',),
         ]
       ),
     );

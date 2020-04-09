@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:futures/home.dart';
+import 'package:futures/app.dart';
 import 'package:flutter/services.dart';
 import 'package:futures/i18n.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -20,31 +20,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "期货投资宝",
+      title: "深度期货投资",
+      // theme: new ThemeData(
+      //   primaryColor: Color.fromRGBO(22, 127, 255, 1),
+      //   dividerColor: Colors.grey[100],
+      //   backgroundColor: Color.fromRGBO(245,247,250,1),
+      //   cardColor: Colors.white,
+      //   highlightColor: Colors.transparent,
+      //   splashColor: Colors.transparent,
+      //   textTheme:  TextTheme(
+      //       body1:TextStyle(
+      //       fontFamily: "DIN",
+      //       color: Colors.black87,
+      //     )
+      //   ),
+      //   appBarTheme: AppBarTheme(
+      //     brightness: Brightness.light,
+      //     textTheme: TextTheme(
+      //       title: TextStyle(
+      //         color: Colors.black87,
+      //         fontSize: 18
+      //       )
+      //     ),
+      //   )
+      // ),
       theme: new ThemeData(
-        primaryColor: Color.fromRGBO(22, 127, 255, 1),
-        dividerColor: Colors.grey[100],
-        backgroundColor: Color.fromRGBO(245,247,250,1),
-        cardColor: Colors.white,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        textTheme:  TextTheme(
-            body1:TextStyle(
-            fontFamily: "DIN",
-            color: Colors.black87,
-          )
-        ),
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-          textTheme: TextTheme(
-            title: TextStyle(
-              color: Colors.black87,
-              fontSize: 18
-            )
-          ),
-        )
-      ),
-      darkTheme: new ThemeData(
         primaryColor: Color.fromRGBO(22, 127, 255, 1),
         backgroundColor: Color.fromRGBO(35, 35, 35, 1),
         cardColor: Color.fromRGBO(25, 25, 25, 1),

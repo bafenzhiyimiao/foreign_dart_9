@@ -25,7 +25,7 @@ class UserIconWidget extends StatelessWidget {
           borderRadius: new BorderRadius.all(
               new Radius.circular(5.0)),
           child: this.isNetwork ? new FadeInImage.assetNetwork(
-            placeholder: 'images/default_nor_avatar.png',
+            placeholder: 'assets/default_nor_avatar.png',
             //预览图
             fit: BoxFit.fitWidth,
             image: image,

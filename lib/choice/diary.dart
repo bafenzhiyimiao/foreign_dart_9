@@ -155,7 +155,7 @@ class _DiaryScreen extends State<DiaryScreen> {
         backgroundColor: Theme.of(context).cardColor,
         elevation: 0.1,
         leading: new IconButton(
-          icon: new Image.asset('images/left.jpg',
+          icon: new Image.asset('assets/left.jpg',
               width: 11, height: 20),
           onPressed: () => Navigator.of(context).pop(),
         ),

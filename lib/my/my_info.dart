@@ -7,12 +7,12 @@ import 'dart:convert' as convert;
 
 
 
-class MyInfoPage extends StatefulWidget {
+class MyInfoScreen extends StatefulWidget {
   @override
-  _MyInfoPageState createState() => _MyInfoPageState();
+  _MyInfoScreenState createState() => _MyInfoScreenState();
 }
 
-class _MyInfoPageState extends State<MyInfoPage> {
+class _MyInfoScreenState extends State<MyInfoScreen> {
 
   var name = '';
   var phone = '';
@@ -141,7 +141,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
         padding: const EdgeInsets.only(right: 0.0),
         width: 55.0,
         height: 55.0,
-        image: 'images/default_nor_avatar.png',
+        image: 'assets/default_nor_avatar.png',
         isNetwork: false,
         onPressed: () {
           // NavigatorUtils.goPerson(context, eventViewModel.actionUser);
@@ -153,7 +153,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
         elevation: 0.1,
         
         leading: new IconButton(
-          icon: new Image.asset('images/left.jpg',
+          icon: new Image.asset('assets/left.jpg',
               width: 11, height: 20),
               
           

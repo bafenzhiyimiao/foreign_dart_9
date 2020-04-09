@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:futures/login/login.dart';
-import 'package:futures/my/collect.dart';
-import 'package:futures/my/follow.dart';
+import 'package:futures/login/login_screen.dart';
+import 'package:futures/my/my_collect.dart';
+import 'package:futures/my/my_follow.dart';
 import 'package:futures/my/usericon.dart';
 import 'package:futures/my/my_info.dart';
-import 'package:futures/my/agree.dart';
-import 'package:futures/my/fankui.dart';
+import 'package:futures/my/privacy.dart';
+import 'package:futures/my/opinion.dart';
 import 'package:futures/my/setting.dart';
 import 'package:futures/global.dart';
-import 'package:futures/my/notice.dart';
+import 'package:futures/my/my_notice.dart';
 import 'dart:convert' as convert;
 
 
@@ -66,13 +66,13 @@ class _MyPageState extends State<MyPage> {
   agree() {
     Navigator.of(context,rootNavigator: true).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-      return new AgreeScreen();
+      return new PrivacyScreen();
     }));
   }
   fan() {
     Navigator.of(context,rootNavigator: true).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-      return new FanScreen();
+      return new OpinionScreen();
     }));
   }
   setting() {
@@ -84,19 +84,19 @@ class _MyPageState extends State<MyPage> {
   notice() {
     Navigator.of(context,rootNavigator: true).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-      return new NoticeScreen();
+      return new MyNoticeScreen();
     }));
   }
   follow() {
     Navigator.of(context,rootNavigator: true).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-      return new FollowList();
+      return new FollowScreen();
     }));
   }
   collect() {
     Navigator.of(context,rootNavigator: true).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-      return new CollectList();
+      return new CollectScreen();
     }));
   }
 
@@ -122,7 +122,7 @@ class _MyPageState extends State<MyPage> {
         padding: const EdgeInsets.only(top: 28.0, right: 18.0, left: 25.0),
         width: 55.0,
         height: 55.0,
-        image: 'images/default_nor_avatar.png',
+        image: 'assets/default_nor_avatar.png',
         isNetwork: false,
         onPressed: () {
           // NavigatorUtils.goPerson(context, eventViewModel.actionUser);
@@ -197,7 +197,7 @@ class _MyPageState extends State<MyPage> {
                   if(login) {
                     Navigator.of(context,rootNavigator: true).push(
                       new MaterialPageRoute(builder: (BuildContext context) {
-                      return new MyInfoPage();
+                      return new MyInfoScreen();
                     })).then((data) {
                       if(data != null) {
                         if(data == 'logout') {
@@ -273,7 +273,7 @@ class _MyPageState extends State<MyPage> {
                     color: Theme.of(context).backgroundColor,
                     height: 10.0,
                   ),
-                  buildRow('images/m1.png', '我的消息', true, notice),
+                  buildRow('assets/my_icon1.png', '我的消息', true, notice),
                 ],
               )
             ),
@@ -286,10 +286,10 @@ class _MyPageState extends State<MyPage> {
                     color: Theme.of(context).backgroundColor,
                     height: 10.0,
                   ),
-                  buildRow('images/m2.png', '收藏', false,collect),
-                  buildRow('images/m3.png', '关注', false,follow),
-                  buildRow('images/m4.png', '隐私协议', false, agree),
-                  buildRow('images/m5.png', '意见反馈', true,fan),
+                  buildRow('assets/my_icon2.png', '收藏', false,collect),
+                  buildRow('assets/my_icon3.png', '关注', false,follow),
+                  buildRow('assets/my_icon4.png', '隐私协议', false, agree),
+                  buildRow('assets/my_icon5.png', '意见反馈', true,fan),
                 ],
               ),
             ),
@@ -302,7 +302,7 @@ class _MyPageState extends State<MyPage> {
                     color: Theme.of(context).backgroundColor,
                     height: 10.0,
                   ),
-                  buildRow('images/m6.png', '设置', true,setting),
+                  buildRow('assets/my_icon6.png', '设置', true,setting),
                 ],
               ),
             )

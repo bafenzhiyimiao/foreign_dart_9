@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:futures/choice/video.dart';
-import 'package:futures/choice/news.dart';
-import 'package:futures/choice/seven.dart';
+import 'package:futures/choice/visual_screen.dart';
+import 'package:futures/choice/article.dart';
+import 'package:futures/choice/news_flash.dart';
 // import 'package:taurus/header.dart';
 
 class ChoiceScreen extends StatefulWidget {
@@ -57,11 +57,11 @@ class _ChoiceScreen extends State<ChoiceScreen> with SingleTickerProviderStateMi
         body:TabBarView(
                 controller: _tabCon,
                 children: <Widget>[
-                  VideoScreen(),
-                  SevenScreen(),
-                  NewsList(),
+                  VisualScreen(),
+                  NewsFlash(),
+                  ArticleScreen(),
                   // DiaryScreen(),
-                  // VideoList(),
+                  // VisualScreenList(),
                 ]
               )
       );

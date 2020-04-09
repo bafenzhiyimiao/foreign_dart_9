@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:futures/my/about.dart';
+import 'package:futures/my/understand.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 
@@ -27,7 +27,7 @@ class _SettingScreenState extends State<SettingScreen> {
   about() {
         Navigator.of(context,rootNavigator: true).push(
           new MaterialPageRoute(builder: (BuildContext context) {
-          return new About();
+          return new Understand();
         }));
   }
 
@@ -93,7 +93,7 @@ class _SettingScreenState extends State<SettingScreen> {
         backgroundColor: Theme.of(context).cardColor,
         elevation: 0.1,
         leading: new IconButton(
-          icon: new Image.asset('images/left.jpg',
+          icon: new Image.asset('assets/left.jpg',
               width: 11, height: 20),
               
           

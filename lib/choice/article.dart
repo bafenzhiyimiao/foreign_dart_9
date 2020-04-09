@@ -1,37 +1,35 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_easyrefresh/taurus_footer.dart';
+import 'package:flutter_easyrefresh/taurus_header.dart';
 import 'package:flustars/flustars.dart';
 import 'package:futures/news/news_detail.dart';
 import 'package:flutter/cupertino.dart';
 
 
 
-class NewsList extends StatefulWidget {
-  final catid;
-  NewsList({Key key, @required this.catid, }) : super(key: key);
+class ArticleScreen extends StatefulWidget {
   @override
-  NewsListState createState() => NewsListState(catid:catid);
+  ArticleScreenState createState() => ArticleScreenState();
 }
-class NewsListState extends State<NewsList> {
-
-  final catid;
-  NewsListState({Key key, @required this.catid, });
+class ArticleScreenState extends State<ArticleScreen> {
   // 总数
-  var list = [];
+  var newsList = [];
   var page = 1;
 
   Future<void> onRefreshing() async {
-    list.clear();
+    newsList.clear();
     try {
       Response response = await Dio().get(
-          "http://news.taoketong.cc//api/articlelist?catid=${catid}&number=20&page=1",
+          "http://news.taoketong.cc//api/articlelist?catid=14,16,10,12,11&number=20&page=1",
       );
       if (mounted) {
         // var res = jsonDecode(response.data);
         setState(() {
-          list.addAll(response.data);
+          newsList.addAll(response.data);
           page = 2;
         });
       }
@@ -45,12 +43,12 @@ class NewsListState extends State<NewsList> {
   Future<void> onLding() async {
     try {
       Response response = await Dio().get(
-          "http://news.taoketong.cc//api/articlelist?catid=${catid}&number=20&page=${page}",
+          "http://news.taoketong.cc//api/articlelist?catid=14&number=20&page=${page}",
       );
       if (mounted) {
         // var res = jsonDecode(response.data);
         setState(() {
-          list.addAll(response.data);
+          newsList.addAll(response.data);
           page = page +1;
         });
       }
@@ -71,10 +69,9 @@ class NewsListState extends State<NewsList> {
 
   @override
   Widget build(BuildContext context) {
-    if(list.isNotEmpty) {
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        body: EasyRefresh.custom(
+        body: newsList.isNotEmpty ?  EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
           },
@@ -90,21 +87,11 @@ class NewsListState extends State<NewsList> {
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
-                                return new NewsDetail(id:list[i]["id"]);
+                                return new NewsDetail(id:newsList[i]["id"]);
                               }));
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Theme.of(context).dividerColor,
-                                  style: BorderStyle.solid,
-                                  width: 0.4,
-                                )
-                              ),
-                            ),
-                          padding: EdgeInsets.only(left: 10,right: 10,bottom: 5,top: 5),
+                          child: Card(
+                          margin: EdgeInsets.only(left: 10,right: 10,bottom: 0,top: 10),
                           child: Row(
                             children: <Widget>[
                               Expanded(
@@ -115,7 +102,7 @@ class NewsListState extends State<NewsList> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       new Text(
-                                        list.isNotEmpty? list[i]["title"] : "",
+                                        newsList.isNotEmpty? newsList[i]["title"] : "",
                                         style: new TextStyle(fontSize: 14.0),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
@@ -125,8 +112,8 @@ class NewsListState extends State<NewsList> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                            new Text(
-                                          list.isNotEmpty
-                                              ? TimelineUtil.format(DateTime.parse(list[i]["created"]).millisecondsSinceEpoch,
+                                          newsList.isNotEmpty
+                                              ? TimelineUtil.format(DateTime.parse(newsList[i]["created"]).millisecondsSinceEpoch,
                                                 dayFormat: DayFormat.Full)
                                               : '',
                                           style: new TextStyle(color: Colors.grey, fontSize: 12.0),
@@ -139,29 +126,34 @@ class NewsListState extends State<NewsList> {
                               ),
                               Expanded(
                                 flex: 1,
-                                child: new Image(
-                                  height: 70,
-                                  width: 90,
-                                fit: BoxFit.fill,
-                                  image: new NetworkImage(
-                                      list.isNotEmpty? list[i]["imgurl"] : null),
+                                child: Container(
+                                  height: 90,
+                                  width: 130,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                                    image: new DecorationImage(
+                                      image: NetworkImage(newsList[i]["imgurl"]),
+                                      fit:BoxFit.fill
+                                    ),
                                   ),
+                                )
+                                 
                               )
                             ],
                           ),
                           )
                         );
                 },
-                childCount: list.length,
+                childCount: newsList.length,
               ),
             ),
           ],
-        ),
+        ) : Image(
+          image: AssetImage('assets/list_empty_dark.jpg'),
+          height: double.infinity,
+          width: double.infinity,
+          fit: BoxFit.fill,
+        )
       );
-    }else {
-      return Center(
-          
-        ); 
-    }
   }
 }

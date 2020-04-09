@@ -81,7 +81,7 @@ class _UserImageScreen extends State<UserImageScreen> {
           elevation: 0.0,
           brightness: Brightness.dark,
           leading: new IconButton(
-            icon: new Image.asset('images/left_w.jpg',
+            icon: new Image.asset('assets/left_w.jpg',
                 width: 11, height: 20),
                 
           
@@ -133,7 +133,7 @@ class _UserImageScreen extends State<UserImageScreen> {
                       getImage();
                   },
                   child: imageStr  == null ? Image.asset(
-                    'images/default_nor_avatar.png',
+                    'assets/default_nor_avatar.png',
                     fit:BoxFit.fitWidth,
                     width: MediaQuery.of(context).size.width -30,
                   ): Image.memory(imageStr,

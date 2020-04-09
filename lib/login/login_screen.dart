@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
-import 'package:futures/my/agree.dart';
+import 'package:futures/my/privacy.dart';
 import 'package:futures/toast.dart';
 import 'package:futures/global.dart';
 
@@ -31,27 +31,29 @@ class CodeButton extends StatelessWidget {
     }
 
     return GestureDetector(
-  behavior: HitTestBehavior.opaque,
+      behavior: HitTestBehavior.opaque,
       onTap: onPressed,
       child: Container(
         width: 95,
         child: Text('获取验证码',
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: Colors.white)),
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Colors.white
+            )
+        ),
       ),
     );
   }
 }
 
-class LoginScreen extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => LoginScreenState();
+  State<StatefulWidget> createState() => LoginPageState();
 }
 
-class LoginScreenState extends State {
+class LoginPageState extends State {
   TextEditingController phoneEditer = TextEditingController();
   TextEditingController codeEditer = TextEditingController();
   int coldDownSeconds = 0;
@@ -273,10 +275,10 @@ class LoginScreenState extends State {
                       onTap: () {
                         Navigator.of(context,rootNavigator: true).push(
                             new MaterialPageRoute(builder: (BuildContext context) {
-                          return new AgreeScreen();
+                          return new PrivacyScreen();
                         }));
                       },
-                      child: Text('期货投资宝隐私协议',style: TextStyle(color:Colors.white,fontSize: 12,fontWeight: FontWeight.w700)),
+                      child: Text('用户隐私协议',style: TextStyle(color:Colors.white,fontSize: 12,fontWeight: FontWeight.w700)),
                     ),
                     Text('》',style: TextStyle(color:Colors.white,fontSize: 12))
                   ],
@@ -296,17 +298,24 @@ class LoginScreenState extends State {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        
         leading: new IconButton(
-          icon: new Image.asset('images/left_w.jpg',width: 11, height: 20),
-          
-          
+          icon: new Image.asset('assets/left_w.jpg',width: 11, height: 20),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text("登录",style: TextStyle(color: Colors.white),)
       ),
       backgroundColor: Colors.transparent,
-      body: buildBody(),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+           decoration: new BoxDecoration(
+            image: new DecorationImage(
+              image: AssetImage("assets/login_bg.jpg"),
+              fit:BoxFit.fill
+            ),
+           ),
+        child: buildBody(),
+      )
     );
   }
 }
