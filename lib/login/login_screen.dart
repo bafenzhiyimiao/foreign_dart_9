@@ -59,6 +59,7 @@ class LoginPageState extends State {
   int coldDownSeconds = 0;
   Timer timer;
   bool agree = true;
+  bool send = false;
 
   fetchSmsCode() async {
     if (phoneEditer.text.length != 11) {
@@ -82,6 +83,7 @@ class LoginPageState extends State {
             ToastUtil.show("短信验证码已发送，请注意查收");
             setState(() {
               coldDownSeconds = 60;
+              send = true;
             });
             coldDown();
           }else {
@@ -109,8 +111,16 @@ class LoginPageState extends State {
       ToastUtil.show('您尚未同意用户隐私协议');
       return;
     }
-    if (phone.length != 11) {
+    if (phone == null || phone == '' || phone.length != 11) {
       ToastUtil.show('输入手机号不合法');
+      return;
+    }
+    if (!send) {
+      ToastUtil.show('您尚未获取验证码');
+      return;
+    }
+    if (code == null || code == '') {
+      ToastUtil.show('验证码错误');
       return;
     }
     try {
