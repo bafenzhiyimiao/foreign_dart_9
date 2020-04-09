@@ -296,7 +296,7 @@ class LoginPageState extends State {
     return Scaffold(
       appBar:AppBar(
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0.0,
         leading: new IconButton(
           icon: new Image.asset('assets/left_w.jpg',width: 11, height: 20),
@@ -304,7 +304,7 @@ class LoginPageState extends State {
         ),
         title: Text("登录",style: TextStyle(color: Colors.white),)
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,

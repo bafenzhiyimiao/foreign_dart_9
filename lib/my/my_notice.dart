@@ -16,7 +16,7 @@ class MyNoticeScreenState extends State<MyNoticeScreen> {
       return Scaffold(
          appBar: AppBar(
           title: Text('我的消息',style: TextStyle(color: Colors.black87,fontSize: 18),),
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).backgroundColor,
           elevation: 0.1,
           
           leading: new IconButton(
@@ -27,6 +27,7 @@ class MyNoticeScreenState extends State<MyNoticeScreen> {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
+        backgroundColor: Theme.of(context).backgroundColor,
         body: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

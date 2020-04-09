@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "深度期货投资",
+      title: "助美期货",
       // theme: new ThemeData(
       //   primaryColor: Color.fromRGBO(22, 127, 255, 1),
       //   dividerColor: Colors.grey[100],
