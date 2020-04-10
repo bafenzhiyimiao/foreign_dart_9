@@ -15,7 +15,7 @@ class MyNoticeScreenState extends State<MyNoticeScreen> {
   Widget build(BuildContext context) {
       return Scaffold(
          appBar: AppBar(
-          title: Text('我的消息',style: TextStyle(color: Colors.black87,fontSize: 18),),
+          title: Text('我的消息'),
           backgroundColor: Theme.of(context).backgroundColor,
           elevation: 0.1,
           

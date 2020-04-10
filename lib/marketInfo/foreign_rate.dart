@@ -122,14 +122,20 @@ class ForeignScreenState extends State<ForeignScreen> {
 
   Future<void> onRefreshing() async {
     try {
-      Response response = await Dio().get(
-          "http://stage.since2006.com/api/forex/rates");
-        print(response.data);
+      Map<String, dynamic> httpHeaders = {
+          'X-LC-Id': 'pIwJE5YdPiyFKg2X9uolEcqz-MdYXbMMI',
+          'X-LC-Key': 'sfIJshbqRGbP3nJpQgBL0QJo',
+        };
+        Options options = Options(headers:httpHeaders);
+        Response response = await Dio().get(
+            "https://piwje5yd.api.lncldglobal.com/1.1/classes/quota/5e8eb612a5a0f50008a4265a",
+            options: options
+        );
 
       if (mounted) {
         var l = [];
           nameList.forEach((value) {
-            response.data["result"].forEach((val) {
+            response.data["rate"].forEach((val) {
               if(val["fiCurrencyId"] == value["id"] ){
                 l.add(
                   {

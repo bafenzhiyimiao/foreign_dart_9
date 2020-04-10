@@ -216,7 +216,7 @@ class _SchoolScreen extends State<SchoolScreen> {
             children: <Widget>[
               Image.asset('assets/data.jpg',width: 100,fit: BoxFit.fill,),
               Padding(padding: EdgeInsets.only(top:5),),
-              Text('暂无关注',style: TextStyle(color: Colors.grey,fontSize: 12),)
+              Text('暂无数据',style: TextStyle(color: Colors.grey,fontSize: 12),)
             ],
           ),
       ),
