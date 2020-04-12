@@ -16,63 +16,31 @@ class _SchoolScreen extends State<SchoolScreen> {
   var list = [];
   var page = 1;
 
-  Future<void> onRefreshing() async {
+  
+  Future<void> onRefreshing()async {
     list.clear();
     try {
       Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.3.2',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.1'
-      };
-      Options options = Options(headers:httpHeaders);
-      Response response = await Dio().get(
-          "https://reference-api.jin10.com/reference?nav_bar_id=18&page=1&page_size=20",
-          // https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=11406&root_id=0&type=video
-          options: options,
-      );
-      if (mounted) {
-        // // var res = jsonDecode(response.data);
-        setState(() {
-          list = response.data["data"]["list"];
-          page = 2;
-        });
-      }
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+        };
+        Options options = Options(headers:httpHeaders);
+        Response response = await Dio().get(
+            "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/video_12",
+            options: options,
+        );
+        if (mounted) {
+          setState(() {
+            list = response.data["results"];
+          });
+          print(list.length);
+        }
 
     } catch (e) {
-      print(e);
     }
   }
 
 
-  Future<void> onLding() async {
-    try {
-      Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.3.2',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.1'
-      };
-      Options options = Options(headers:httpHeaders);
-      Response response = await Dio().get(
-          "https://reference-api.jin10.com/reference?nav_bar_id=18&page=${page}&page_size=20",
-          // https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=11406&root_id=0&type=video
-          options: options,
-      );
-      if (mounted) {
-        // // var res = jsonDecode(response.data);
-        setState(() {
-          list.addAll(response.data["data"]["list"]);
-          page = page + 1;
-        });
-      }
-
-    } catch (e) {
-      print(e);
-    }
-  }
 
   
 
@@ -106,7 +74,7 @@ class _SchoolScreen extends State<SchoolScreen> {
              this.onRefreshing();
           },
           onLoad: () async {
-            this.onLding();
+            // this.onLding();
           },
           slivers: <Widget>[
             SliverList(
@@ -122,7 +90,7 @@ class _SchoolScreen extends State<SchoolScreen> {
                               onTap: () {
                                   Navigator.of(context,rootNavigator: true).push(
                                     new MaterialPageRoute(builder: (BuildContext context) {
-                                    return new VisualScreenDetail(id:list[i]["id"]);
+                                    return new VisualScreenDetail(id:list[i]["id"],groupid: 12,);
                                   }));
                               },
                               child: Container(
@@ -163,7 +131,7 @@ class _SchoolScreen extends State<SchoolScreen> {
                               onTap: () {
                                   Navigator.of(context,rootNavigator: true).push(
                                     new MaterialPageRoute(builder: (BuildContext context) {
-                                    return new VisualScreenDetail(id:list[i+1]["id"]);
+                                    return new VisualScreenDetail(id:list[i+1]["id"], groupid: 12,);
                                   }));
                               },
                               child: Container(
@@ -205,7 +173,7 @@ class _SchoolScreen extends State<SchoolScreen> {
                       return Container(height: 0,);
                     }
                 },
-                childCount: list.length~/2,
+                childCount: list.length,
               ),
             ),
           ],

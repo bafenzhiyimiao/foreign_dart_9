@@ -18,11 +18,10 @@ class NewsScreenState extends State<NewsScreen> with SingleTickerProviderStateMi
     super.initState();
     tabs = <Tab>[
       // 23新闻 30政策 28活动 31安全 34技术
-      Tab(text: "金银日评",),
-      Tab(text: "策略研究",),
-      Tab(text: "国际财经",),
-      Tab(text: "机构观点",),
-      Tab(text: "市场动态",),
+      Tab(text: "贵金属",),
+      Tab(text: "原油",),
+      Tab(text: "黄金",),
+      Tab(text: "白银",),
     ];
 
     //initialIndex初始选中第几个
@@ -64,10 +63,9 @@ class NewsScreenState extends State<NewsScreen> with SingleTickerProviderStateMi
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          NewsList(catid: '14',),
-          NewsList(catid: '16',),
+          NewsList(catid: '2',),
           NewsList(catid: '10',),
-          NewsList(catid: '12',),
+          NewsList(catid: '17',),
           NewsList(catid: '11',),
         ]
       ),

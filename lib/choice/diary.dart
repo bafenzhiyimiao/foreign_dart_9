@@ -30,15 +30,19 @@ class _DiaryScreen extends State<DiaryScreen> {
           string += controller.getSingleSelectCalendar().month < 10 ? '0' + controller.getSingleSelectCalendar().month.toString() : controller.getSingleSelectCalendar().month.toString();
           string += controller.getSingleSelectCalendar().day < 10 ? '0' + controller.getSingleSelectCalendar().day.toString() : controller.getSingleSelectCalendar().day.toString() ;
     }
+    var time = DateTime.parse(string).millisecondsSinceEpoch;
     
     try {
       Response response = await Dio().get(
-          "http://cj.baoninkaixin.xyz/fedata?type=&country=&rele=&enddate=${string}&date=${string}",
+          "https://mapi.followme-connect.com/app/v1/social2/calendar?timeStamp=${time}",
       );
       if (mounted) {
-        print(response.data["value"]);
+        var arr = [];
+        response.data["data"]["FinancialCalendarGroupData"].forEach((val) {
+          arr.addAll(val['Items']);
+        });
         setState(() {
-          list = response.data["value"];
+          list = arr;
         });
       }
     } catch (e) {
@@ -88,7 +92,7 @@ class _DiaryScreen extends State<DiaryScreen> {
   buildList() {
     List<Widget> row = [];
     list.isNotEmpty && list != null ? list.forEach((val) {
-      if(val != null && val['title'] != null) {
+      if(val != null && val['Content'] != null) {
 
       row.add(
         Container(
@@ -97,7 +101,7 @@ class _DiaryScreen extends State<DiaryScreen> {
           child: Row(
             children: <Widget>[
               Text(
-                val['stime'] != null ? val['stime'].substring(10,16) : '',
+                val['Time'] != null ? val['Time'] : '',
                 style: TextStyle(color: Colors.blue[200]),
               ),
               Padding(padding: EdgeInsets.only(left:15),),
@@ -107,14 +111,14 @@ class _DiaryScreen extends State<DiaryScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                     Text(
-                        val['affect'] != null ? val['affect'] : '',
+                        val['CountryName'] != null ? val['CountryName'] : '',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.orange,fontSize: 12),
                       ),
                       Padding(padding: EdgeInsets.only(top:5),),
                       Text(
-                        val['title'] != null ? val['title'] : '',
+                        val['Content'] != null ? val['Content'] : '',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.w700),
@@ -123,13 +127,13 @@ class _DiaryScreen extends State<DiaryScreen> {
                       Row(
                         children: <Widget>[
                           Text('前值: ' ,style: TextStyle(fontSize: 12,color: Colors.grey),),
-                          Text(val['previous_price'] != null ?  val['previous_price']:'--',style: TextStyle(fontSize: 12,color: Colors.orange),),
+                          Text(val['Previous'] != null ?  val['Previous']:'--',style: TextStyle(fontSize: 12,color: Colors.orange),),
                           Padding(padding: EdgeInsets.only(left:5),),
                           Text('预期: ',style: TextStyle(fontSize: 12,color: Colors.grey),),
-                          Text(val['surver_price'] != null ?  val['surver_price']:'--',style: TextStyle(fontSize: 12,color: Colors.orange),),
+                          Text(val['Predict'] != null ?  val['Predict']:'--',style: TextStyle(fontSize: 12,color: Colors.orange),),
                           Padding(padding: EdgeInsets.only(left:5),),
                           Text('公布: ',style: TextStyle(fontSize: 12,color: Colors.grey),),
-                          Text(val['actual_price'] != null ?  val['actual_price']:'--',style: TextStyle(fontSize: 12,color: Colors.orange),),
+                          Text(val['CurrentValue'] != null ?  val['CurrentValue']:'--',style: TextStyle(fontSize: 12,color: Colors.orange),),
                           Padding(padding: EdgeInsets.only(left:5),),
                         ],
                       )
@@ -160,13 +164,22 @@ class _DiaryScreen extends State<DiaryScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
+      backgroundColor: Theme.of(context).backgroundColor,
       body: new Container(
         child: new ListView(
           children: <Widget>[
             CalendarViewWidget(
               calendarController: controller,
+              boxDecoration: BoxDecoration(
+                color: Theme.of(context).dividerColor,
+              ),
             ),
-            buildList()
+            list.isNotEmpty? buildList() : Container(
+              color: Theme.of(context).backgroundColor,
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(10),
+              child: Text('本日暂无财经事件'),
+            )
           ],
         ),
       ),

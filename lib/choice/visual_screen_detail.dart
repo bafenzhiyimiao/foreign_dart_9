@@ -15,9 +15,10 @@ import 'package:futures/report.dart';
 
 class VisualScreenDetail extends StatefulWidget {
   final id;
-  VisualScreenDetail({Key key, @required this.id}) : super(key: key);
+  final groupid;
+  VisualScreenDetail({Key key, @required this.id, @required this.groupid}) : super(key: key);
   @override
-  VisualScreenDetailState createState() => VisualScreenDetailState(id: id);
+  VisualScreenDetailState createState() => VisualScreenDetailState(id: id, groupid: groupid);
 }
 
 var controller;
@@ -25,7 +26,8 @@ var controller;
 
 class VisualScreenDetailState extends State<VisualScreenDetail> {
   final id;
-  VisualScreenDetailState({Key key, @required this.id});
+  final groupid;
+  VisualScreenDetailState({Key key, @required this.id,  @required this.groupid});
 
   var detail;
   var list;
@@ -40,63 +42,104 @@ class VisualScreenDetailState extends State<VisualScreenDetail> {
 
 
 
-
-
-  Future<void> onRefreshing() async {
+  Future<void> onRefreshing()async {
     try {
       Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.3.2',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.1'
-      };
-      Map<String, dynamic> httpHeaders2 = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.4.0',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.0'
-      };
-      print(id);
-      Options options = Options(headers:httpHeaders);
-      Options options2 = Options(headers:httpHeaders2);
-      Response response = await Dio().get(
-          "https://reference-api.jin10.com/reference/getOne?id=${id.toString()}&type=video",
-          options: options,
-      );
-      Response res = await Dio().get(
-          "https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=11438&root_id=0&type=video",
-          options: options2,
-      );
-      if (mounted) {
-        controller = VideoPlayerController.network(response.data["data"]["video_url"]);
-        setState(() {
-          detail = response.data["data"];
-          comments = res.data["data"]["items"] != null ? res.data["data"]["items"] : [];
-          chewieController = ChewieController(
-            videoPlayerController: controller,
-            aspectRatio: 16 / 9,
-            autoPlay: true,
-            looping: true,
-            placeholder: new Container(
-                color: Colors.white,
-            ),
-          );
-        });
-        getFollow(response.data["data"]);
-      }
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+        };
+        Options options = Options(headers:httpHeaders);
+        Response response = await Dio().get(
+            "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/video_${groupid}_detail",
+            options: options,
+        );
+        if (mounted) {
+          response.data["results"].forEach((val) {
+            if(val["id"].toString() == id.toString()) {
+              controller = VideoPlayerController.network(val['detail']["video_url"]);
+              print(val['detail']["video_url"]);
+              setState(() {
+                detail = val['detail'];
+                comments = val["comment"];
+                chewieController = ChewieController(
+                  videoPlayerController: controller,
+                  aspectRatio: 16 / 9,
+                  autoPlay: true,
+                  looping: true,
+                  placeholder: new Container(
+                      color: Colors.white,
+                  ),
+                );
+              });
+            }
+          });
+          
+        }
 
     } catch (e) {
-      print(e);
     }
   }
+
+
+
+
+
+  // Future<void> onRefreshing() async {
+  //   try {
+  //     Map<String, dynamic> httpHeaders = {
+  //       'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
+  //       'x-app-ver': 'ios_base_4.3.2',
+  //       'x-token': '',
+  //       'x-app-id': 'g93rhHb9DcDptyPb',
+  //       'x-version':'1.0.1'
+  //     };
+  //     Map<String, dynamic> httpHeaders2 = {
+  //       'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
+  //       'x-app-ver': 'ios_base_4.4.0',
+  //       'x-token': '',
+  //       'x-app-id': 'g93rhHb9DcDptyPb',
+  //       'x-version':'1.0.0'
+  //     };
+  //     print(id);
+  //     Options options = Options(headers:httpHeaders);
+  //     Options options2 = Options(headers:httpHeaders2);
+  //     Response response = await Dio().get(
+  //         "https://reference-api.jin10.com/reference/getOne?id=${id.toString()}&type=video",
+  //         options: options,
+  //     );
+  //     Response res = await Dio().get(
+  //         "https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=11438&root_id=0&type=video",
+  //         options: options2,
+  //     );
+  //     if (mounted) {
+  //       controller = VideoPlayerController.network(response.data["data"]["video_url"]);
+  //       setState(() {
+  //         detail = response.data["data"];
+  //         comments = res.data["data"]["items"] != null ? res.data["data"]["items"] : [];
+  //         chewieController = ChewieController(
+  //           videoPlayerController: controller,
+  //           aspectRatio: 16 / 9,
+  //           autoPlay: true,
+  //           looping: true,
+  //           placeholder: new Container(
+  //               color: Colors.white,
+  //           ),
+  //         );
+  //       });
+  //       getFollow(response.data["data"]);
+  //     }
+
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
  
   @override
   void initState() {
     super.initState();
     onRefreshing();
+    getFollow();
     LocalStorage.getBool('login').then((val){
       if(val != null) {
         setState(() {
@@ -121,12 +164,12 @@ class VisualScreenDetailState extends State<VisualScreenDetail> {
    }
 
 
-  getFollow(detail) {
+  getFollow() {
     LocalStorage.getJSON('follow').then((arr) {
       print(arr);
       if(arr != null) {
         arr.forEach((val) {
-          if(val['category_ids'][0] == detail["category_ids"][0]) {
+          if(val == groupid) {
             setState(() {
               isfollow = true;
             });
@@ -295,11 +338,11 @@ class VisualScreenDetailState extends State<VisualScreenDetail> {
                             onTap: () {
                               LocalStorage.getJSON('follow').then((val){
                                 if(val == null) {
-                                  var str = [detail];
+                                  var str = [groupid];
                                   LocalStorage.setJSON('follow', str);
                                 }else {
                                   var str = val;
-                                  str.add(detail);
+                                  str.add(groupid);
                                   LocalStorage.setJSON('follow', str);
                                 }
                               });
@@ -325,14 +368,11 @@ class VisualScreenDetailState extends State<VisualScreenDetail> {
                               LocalStorage.getJSON('follow').then((val){
                                 var arr = [];
                                 val.forEach((w) => {
-                                  if(w['category_ids'][0] != detail['category_ids'][0]) {
+                                  if(w != groupid) {
                                     arr.add(w)
                                   }
                                 });
                                 LocalStorage.setJSON('follow', arr == null ? [] : arr);
-                              });
-                              LocalStorage.getJSON('follow').then((arr){
-                                print(arr);
                               });
                               setState(() {
                                 isfollow = !isfollow;

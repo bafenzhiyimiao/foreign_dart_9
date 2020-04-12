@@ -40,15 +40,18 @@ class HomepageScreenState extends State<HomepageScreen> {
   Future<void> getlist() async {
     marketlist.clear();
     try {
-      Response response = await Dio().get(
-          "http://cj.taoketong.cc/cftc_app?");
-      if (mounted) {
+        Map<String, dynamic> httpHeaders = {
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+        };
+        Options options = Options(headers:httpHeaders);
+        Response response = await Dio().get(
+            "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/homemarket",
+            options: options,
+        );
         setState(() {
-          marketlist.addAll(response.data);
+          marketlist = response.data["results"];
         });
-        print(marketlist);
-      }
-
     } catch (e) {
       print(e);
     }
@@ -56,37 +59,41 @@ class HomepageScreenState extends State<HomepageScreen> {
   }
 
 
+
   var sliderList = [
     {
-      "title": "全球资产惨遭杀跌 金银推手流星坠落！",
-      "id": '27722',
+      "title": "私募巨头贝莱德BlackRock与微软合作在Azure上托管Aladdin",
+      "id": '3202902',
       'img': 'assets/banner1.png'
     },{
-      "title": "道指反弹仅“昙花一现” 金价40美元涨幅悉数回吐",
+      "title": "这三个最基础确最重要的交易概念，一定要了解透彻",
       'img': 'assets/banner2.png',
-      "id": '27721'
+      "id": '3202909'
     }, {
-				"title": "全球股市崩盘重失传 贵金属全线暴跌",
+				"title": "一切都是“无用功”？G20石油协议注定失败！油价恐暴跌至8美元",
         'img': 'assets/banner3.png',
-        "id": '27718',
+        "id": '3202905',
 			},
   ];
+
   var noticeList = [
     {
-      "title": "交易女神经 第4集：Cindy交易胜率高达75%！她究竟制定了什么交易规则？",
-      "name": '交易女神经',
-      "category_id": '45',
-    },
+				"title": "八周交易计划2 《我的信仰》",
+				"id": 1872,
+        "cid": 22,
+        'name': '八周交易计划'
+			},
     {
-      "title": "从悉尼到深圳，身临千万资金交易圈|卓识私享会第二期活动回顾",
-      "name": '伦敦交易者',
-      "category_id": '44',
-    },
-    {
-      "title": "【自习室】真人交易验证，交易学习真的有迹可循！",
-      "name": '交易学院',
-      "category_id": '41',
-    },
+      "title": "原油走强有模式可循？CME专家教你破解WTI走势“套路”",
+      "id": 5256,
+      'cid': 12,
+      'name': '国外精选'
+    },{
+      "title": "旅游业新热点！开间民宿真的很赚钱？",
+      "id": 2695,
+      'cid': 9,
+      'name': '财经babala'
+    }, 
   ];
 
 
@@ -543,7 +550,7 @@ class HomepageScreenState extends State<HomepageScreen> {
                           onTap: (index){
                             Navigator.of(context,rootNavigator: true).push(
                               new MaterialPageRoute(builder: (BuildContext context) {
-                              return new VisualScreenList(id:noticeList[index]["category_id"], name:noticeList[index]['name'].replaceAll("金十","期货"));
+                              return new VisualScreenList(id:noticeList[index]["cid"], name:noticeList[index]['name']);
                             }));
                           },
                         ),

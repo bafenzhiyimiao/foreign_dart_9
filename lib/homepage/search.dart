@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:futures/homepage/search_reslut.dart';
+import 'package:futures/news/news_list.dart';
 
 
 class Search extends StatefulWidget {
@@ -23,7 +24,7 @@ class _Search extends State<Search> with SingleTickerProviderStateMixin{
   }
 
 
-  tag(text) {
+  tag(text,catid) {
     return GestureDetector(
     behavior: HitTestBehavior.opaque,
       child: Container(
@@ -39,7 +40,7 @@ class _Search extends State<Search> with SingleTickerProviderStateMixin{
       onTap:() {
         Navigator.of(context,rootNavigator: true).push(
           new MaterialPageRoute(builder: (BuildContext context) {
-          return new SearchReslut(name: text);
+          return new SearchReslut(id: catid);
         }));
       }
     );
@@ -86,7 +87,7 @@ class _Search extends State<Search> with SingleTickerProviderStateMixin{
                             if(text != null) {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
-                                return new SearchReslut(name: text);
+                                return new SearchReslut(id:'');
                               }));
                             }
                           },
@@ -127,16 +128,15 @@ class _Search extends State<Search> with SingleTickerProviderStateMixin{
                         padding: EdgeInsets.fromLTRB(10,10,15,0),
                         child: Wrap(
                           children: <Widget>[
-                            tag('美联储'),
-                            tag('欧佩克'),
-                            tag('外汇'),
-                            tag('EIA'),
-                            tag('天然气'),
-                            tag('非农'),
-                            tag('黄金'),
-                            tag('原油'),
-                            tag('比特币'),
-                            tag('区块链'),
+                            tag('贵金属',2),
+                            tag('原油',10),
+                            tag('黄金',17),
+                            tag('白银',11),
+                            tag('美元',12),
+                            tag('人民币',13),
+                            tag('欧元',14),
+                            tag('纸黄金',15),
+                            tag('美联储',16),
                           ],
                         ),
                       )

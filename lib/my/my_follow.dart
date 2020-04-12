@@ -4,6 +4,8 @@ import 'package:futures/choice/visual_screen_detail.dart';
 import 'package:futures/choice/visual_screen_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:futures/global.dart';
+import 'package:dio/dio.dart';
+
 
 
 
@@ -28,12 +30,44 @@ class FollowScreenState extends State<FollowScreen> {
   }
   getFollow() {
     LocalStorage.getJSON('follow').then((val) {
-      if(val != null) {
+      if(val == null) {
+        return;
+      } 
+      print(val);
+      onRefreshing(val);
+    });
+  }
+
+
+  Future<void> onRefreshing(val) async {
+    list.clear();
+    try {
+      Map<String, dynamic> httpHeaders = {
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+        };
+        Options options = Options(headers:httpHeaders);
+      Response response = await Dio().get(
+          "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/video",
+            options: options,
+      );
+      if (mounted) {
+        var arr = [];
+        val.forEach((val) {
+          response.data['results'].forEach((v) {
+            if(val== v["category_id"] ) {
+              arr.add(v);
+            }
+          });
+        });
         setState(() {
-          list = val;
+          list.addAll(arr);
         });
       }
-    });
+
+    } catch (e) {
+      print(e);
+    }
   }
 
 
@@ -76,16 +110,16 @@ class FollowScreenState extends State<FollowScreen> {
                                       margin: EdgeInsets.only(right:10),
                                     ),
                                     Text(
-                                      list[i]['subscription_name'].replaceAll("金十","期货"),
+                                      list[i]['name'].replaceAll("金十","期货"),
                                       style: TextStyle(fontWeight: FontWeight.w700),
                                     ),
                                     Expanded(
                                       child: GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                                        behavior: HitTestBehavior.opaque,
                                         onTap: () {
                                           Navigator.of(context,rootNavigator: true).push(
                                             new MaterialPageRoute(builder: (BuildContext context) {
-                                            return new VisualScreenList(id:list[i]["category_id"], name:list[i]['subscription_name'].replaceAll("金十","期货"));
+                                            return new VisualScreenList(id:list[i]["category_id"], name:list[i]['name'].replaceAll("金十","期货"));
                                           }));
                                         },
                                         child: Container(
@@ -105,11 +139,11 @@ class FollowScreenState extends State<FollowScreen> {
                                   children: <Widget>[
                                     Expanded(
                                       child: GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                                        behavior: HitTestBehavior.opaque,
                                         onTap: () {
                                           Navigator.of(context,rootNavigator: true).push(
                                             new MaterialPageRoute(builder: (BuildContext context) {
-                                            return new VisualScreenDetail(id:list[i]["video_list"][0]["id"]);
+                                            return new VisualScreenDetail(id:list[i]["list"][0]["id"], groupid: list[i]["category_id"],);
                                           }));
                                         },
                                         child: Container(
@@ -121,12 +155,12 @@ class FollowScreenState extends State<FollowScreen> {
                                                   child: ClipRRect(
                                                     borderRadius: BorderRadius.circular(10),
                                                     child: Image(
-                                                      image: NetworkImage(list[i]["video_list"][0]["detail_img"]),
+                                                      image: NetworkImage(list[i]["list"][0]["detail_img"]),
                                                     )
                                                   )
                                                 ),
                                               Text(
-                                                    list[i]["video_list"][0]["title"],
+                                                    list[i]["list"][0]["title"],
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                   )
@@ -138,11 +172,11 @@ class FollowScreenState extends State<FollowScreen> {
 
                                     Expanded(
                                       child: GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                                        behavior: HitTestBehavior.opaque,
                                         onTap: () {
                                           Navigator.of(context,rootNavigator: true).push(
                                             new MaterialPageRoute(builder: (BuildContext context) {
-                                            return new VisualScreenDetail(id:list[i]["video_list"][1]["id"]);
+                                            return new VisualScreenDetail(id:list[i]["list"][1]["id"], groupid: list[i]["category_id"],);
                                           }));
                                         },
                                         child: Container(
@@ -154,12 +188,12 @@ class FollowScreenState extends State<FollowScreen> {
                                                   child: ClipRRect(
                                                     borderRadius: BorderRadius.circular(10),
                                                     child: Image(
-                                                      image: NetworkImage(list[i]["video_list"][1]["detail_img"]),
+                                                      image: NetworkImage(list[i]["list"][1]["detail_img"]),
                                                     )
                                                   )
                                                 ),
                                               Text(
-                                                    list[i]["video_list"][1]["title"],
+                                                    list[i]["list"][1]["title"],
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                   )

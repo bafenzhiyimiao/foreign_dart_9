@@ -23,18 +23,21 @@ class VisualScreenState extends State<VisualScreen> {
 
   var sliderList = [
     {
-				"title": "技术指标与价格形态如何搭配使用？Cindy学会后全部盈利！",
-				"detail_img": "https://cdn-news.jin10.com/a0bd13f3-8291-4910-9b95-28edcf4d78b5.jpg",
-				"id": 11588,
+				"title": "八周交易计划2 《我的信仰》",
+				"detail_img": "https://cdn.jin10.com/pic/2d/3da0c8d2ebd36151c96c8b50812bc865.png",
+				"id": 1872,
+        "cid": 22,
 			},
     {
-      "title": "从悉尼到深圳，身临千万资金交易圈|卓识私享会第二期活动回顾",
-      "detail_img": "https://cdn-news.jin10.com/6238d7be-27bd-40e6-94e6-776b5a4dfe53.jpg",
-      "id": 11218,
+      "title": "原油走强有模式可循？CME专家教你破解WTI走势“套路”",
+      "detail_img": "https://cdn.jin10.com/pic/7a/09e6739363780f895987d8e02deceb40.jpg",
+      "id": 5256,
+      'cid': 12
     },{
-      "title": "特斯拉股价全解析 5年内涨至7000美元？",
-      "detail_img": "https://cdn-news.jin10.com/004e7245-1555-4c66-a3ec-5aa7b76c2c0c.png",
-      "id": 11360,
+      "title": "旅游业新热点！开间民宿真的很赚钱？",
+      "detail_img": "https://cdn.jin10.com/pic/a9/e2fdb14aedc95c0fe6ffba4c50f53ee8.jpg",
+      "id": 2695,
+      'cid': 9
     }, 
   ];
 
@@ -42,22 +45,17 @@ class VisualScreenState extends State<VisualScreen> {
     list.clear();
     try {
       Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.3.2',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.1'
-      };
-      Options options = Options(headers:httpHeaders);
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+        };
+        Options options = Options(headers:httpHeaders);
       Response response = await Dio().get(
-          "https://reference-api.jin10.com/reference?nav_bar_id=5&page=1&page_size=20",
-          options: options
+          "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/video",
+            options: options,
       );
       if (mounted) {
-        print(response);
-        // // var res = jsonDecode(response.data);
         setState(() {
-          list.addAll(response.data['data']["categories"]);
+          list.addAll(response.data['results']);
         });
       }
 
@@ -65,6 +63,56 @@ class VisualScreenState extends State<VisualScreen> {
       print(e);
     }
   }
+
+  // Future<void> onRefreshing() async {
+  //   list.clear();
+  //   try {
+  //     Map<String, dynamic> httpHeaders = {
+  //       'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
+  //       'x-app-ver': 'ios_base_4.3.2',
+  //       'x-token': '',
+  //       'x-app-id': 'g93rhHb9DcDptyPb',
+  //       'x-version':'1.0.1'
+  //     };
+  //     Options options = Options(headers:httpHeaders);
+  //     Response response = await Dio().get(
+  //         "https://reference-api.jin10.com/reference?nav_bar_id=5&page=1&page_size=20",
+  //         options: options
+  //     );
+  //     if (mounted) {
+  //       print(response);
+  //       // // var res = jsonDecode(response.data);
+  //       setState(() {
+  //         list.addAll(response.data['data']["categories"]);
+  //       });
+  //       list.forEach((val) {
+  //         postApi(val);
+  //       });
+  //     }
+
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+
+
+  // Future<void> postApi(data)async {
+  //   try {
+  //     Map<String, dynamic> httpHeaders = {
+  //         'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+  //         'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+  //       };
+  //       Options options = Options(headers:httpHeaders);
+  //       Response response = await Dio().post(
+  //           "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/video",
+  //           options: options,
+  //           data:data
+  //       );
+  //   } catch (e) {
+  //     print('ffff');
+  //   }
+  // }
 
 
   @override
@@ -125,7 +173,7 @@ class VisualScreenState extends State<VisualScreen> {
                                     onTap: (index){
                                       Navigator.of(context,rootNavigator: true).push(
                                         new MaterialPageRoute(builder: (BuildContext context) {
-                                        return new VisualScreenDetail(id:sliderList[index]["id"]);
+                                        return new VisualScreenDetail(id:sliderList[index]["id"],groupid: sliderList[index]["cid"],);
                                       }));
                                     },
                                   ),
@@ -144,7 +192,7 @@ class VisualScreenState extends State<VisualScreen> {
                                     ),
                                     Expanded(
                                       child: GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                                        behavior: HitTestBehavior.opaque,
                                         onTap: () {
                                           Navigator.of(context,rootNavigator: true).push(
                                             new MaterialPageRoute(builder: (BuildContext context) {
@@ -168,11 +216,11 @@ class VisualScreenState extends State<VisualScreen> {
                                   children: <Widget>[
                                     Expanded(
                                       child: GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                                        behavior: HitTestBehavior.opaque,
                                         onTap: () {
                                           Navigator.of(context,rootNavigator: true).push(
                                             new MaterialPageRoute(builder: (BuildContext context) {
-                                            return new VisualScreenDetail(id:list[i]["list"][0]["id"]);
+                                            return new VisualScreenDetail(id:list[i]["list"][0]["id"], groupid: list[i]["category_id"],);
                                           }));
                                         },
                                         child: Container(
@@ -201,11 +249,11 @@ class VisualScreenState extends State<VisualScreen> {
 
                                     Expanded(
                                       child: GestureDetector(
-  behavior: HitTestBehavior.opaque,
+                                        behavior: HitTestBehavior.opaque,
                                         onTap: () {
                                           Navigator.of(context,rootNavigator: true).push(
                                             new MaterialPageRoute(builder: (BuildContext context) {
-                                            return new VisualScreenDetail(id:list[i]["list"][1]["id"]);
+                                            return new VisualScreenDetail(id:list[i]["list"][1]["id"], groupid: list[i]["category_id"],);
                                           }));
                                         },
                                         child: Container(

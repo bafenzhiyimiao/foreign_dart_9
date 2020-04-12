@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:futures/choice/visual_screen.dart';
-import 'package:futures/choice/article.dart';
+import 'package:futures/news/news_list.dart';
 import 'package:futures/choice/news_flash.dart';
 // import 'package:taurus/header.dart';
 
@@ -59,7 +59,7 @@ class _ChoiceScreen extends State<ChoiceScreen> with SingleTickerProviderStateMi
                 children: <Widget>[
                   VisualScreen(),
                   NewsFlash(),
-                  ArticleScreen(),
+                  NewsList(catid: 3,),
                   // DiaryScreen(),
                   // VisualScreenList(),
                 ]

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flustars/flustars.dart';
-import 'package:futures/homepage/hot_detail.dart';
+import 'package:futures/news/news_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:futures/global.dart';
 
@@ -37,6 +37,7 @@ class CollectScreenState extends State<CollectScreen> {
   void initState() {
     super.initState();
     onRefreshing();
+    LocalStorage.clear();
   }
 
 
@@ -74,7 +75,7 @@ class CollectScreenState extends State<CollectScreen> {
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
-                                return new HotDetail(id:list[i]["id"]);
+                                return new NewsDetail(id:list[i]["id"]);
                               }));
                           },
                           child: Column(
@@ -104,26 +105,13 @@ class CollectScreenState extends State<CollectScreen> {
                                         ),
                                         Padding(padding: EdgeInsets.only(top:20),),
                                         new Text(
-                                          TimelineUtil.format(DateTime.parse(list[i]["display_datetime"]).millisecondsSinceEpoch,
+                                          TimelineUtil.format(list[i]["create_time"]*1000,
                                                 dayFormat: DayFormat.Full),
                                           style: new TextStyle(color: Colors.grey, fontSize: 12.0),
                                         ),
                                       ],
                                     ),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(left:20),
-                                       width: 120,
-                                        height: 80,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(new Radius.circular(5.0)),
-                                        image: new DecorationImage(
-                                          image: NetworkImage(list[i]["web_thumbs"][0]),
-                                          fit:BoxFit.fill
-                                        ),
-                                      ),
-                                    )
-                                    
                                      
                                   ],
                                 ),

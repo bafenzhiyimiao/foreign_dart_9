@@ -25,41 +25,72 @@ class MarketInfoListState extends State<MarketInfoList> {
   Timer timer;
 
 
-  Future<void> onRefreshing() async {
-    try {
+  // Future<void> onRefreshing() async {
+  //   try {
      
+  //     Map<String, dynamic> httpHeaders = {
+  //         'X-LC-Id': 'pIwJE5YdPiyFKg2X9uolEcqz-MdYXbMMI',
+  //         'X-LC-Key': 'sfIJshbqRGbP3nJpQgBL0QJo',
+  //       };
+  //       Options options = Options(headers:httpHeaders);
+  //       Response response = await Dio().get(
+  //           "https://piwje5yd.api.lncldglobal.com/1.1/classes/quota/5e8eb612a5a0f50008a4265a",
+  //           options: options
+  //       );
+      
+  //       var res1 = response.data;
+
+  //       var arr = [];
+  //       var arr2 = [];
+  //       var namelist = res1["variety"];
+  //       var quotalist = res1["quota"];
+  //       arr.addAll(namelist.where((val) => val["isDomestic"] == channelid));
+
+
+  //       arr.forEach((val) {
+  //         var quota =  quotalist.where((v) => v["varietyType"] == val["varietyType"]);
+  //         arr2.addAll(quota);
+  //       });
+  //       setState(() {
+  //         list = arr;
+  //         list2 = arr2;
+  //       });
+
+  //       postApi({
+  //         'name': list,
+  //         'quota': list2
+  //       });
+
+
+        
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   setState(() {});
+  // }
+
+
+  Future<void> onRefreshing()async {
+    try {
       Map<String, dynamic> httpHeaders = {
-          'X-LC-Id': 'pIwJE5YdPiyFKg2X9uolEcqz-MdYXbMMI',
-          'X-LC-Key': 'sfIJshbqRGbP3nJpQgBL0QJo',
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
         };
         Options options = Options(headers:httpHeaders);
         Response response = await Dio().get(
-            "https://piwje5yd.api.lncldglobal.com/1.1/classes/quota/5e8eb612a5a0f50008a4265a",
-            options: options
+            "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/market_${channelid}",
+            options: options,
         );
-      
-        var res1 = response.data;
-
-        var arr = [];
-        var arr2 = [];
-        var namelist = res1["variety"];
-        var quotalist = res1["quota"];
-        arr.addAll(namelist.where((val) => val["isDomestic"] == channelid));
-
-
-        arr.forEach((val) {
-          var quota =  quotalist.where((v) => v["varietyType"] == val["varietyType"]);
-          arr2.addAll(quota);
-        });
+        print(response.data);
         setState(() {
-          list = arr;
-          list2 = arr2;
+          list = response.data["results"][0]["name"];
+          list2 = response.data["results"][0]["quota"];
         });
     } catch (e) {
-      print(e);
+      print('ffff');
     }
-    setState(() {});
   }
+
 
   @override
   void initState() {

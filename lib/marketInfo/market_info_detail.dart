@@ -35,14 +35,13 @@ class _MarketInfoDetailState extends State<MarketInfoDetail> with TickerProvider
   String _currentDataType;
 
   var detail;
+  var allklist;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 7, vsync: this, initialIndex: 0);
-    getKDataList(1);
-    // timer();
-//    getDepthList();
+    getKDataList();
   }
   @override
   void dispose() {
@@ -51,53 +50,123 @@ class _MarketInfoDetailState extends State<MarketInfoDetail> with TickerProvider
   }
 
 
-  void timer() {
-    getKDataList(1);
-    Future.delayed(Duration(seconds: 1), () => timer());
-  }
 
   ///
   /// kline request
   ///
-  Future getKDataList(int index) async{
-    var type = '1';
-    switch (index) {
-      case 1:
-        type = '1';
-        break;
-      case 2:
-        type = '3';
-        break;
-      case 3:
-        type = '5';
-        break;
-      case 4:
-        type = '10';
-        break;
-      case 5:
-        type = '30';
-        break;
-      case 6:
-        type = '60';
-        break;
-      case 7:
-        type = '';
-        break;
-      default:
-    }
-    var time = new DateTime.now().millisecondsSinceEpoch;
+  // Future getKDataList(int index) async{
+  //   var type = '1';
+  //   switch (index) {
+  //     case 1:
+  //       type = '1';
+  //       break;
+  //     case 2:
+  //       type = '3';
+  //       break;
+  //     case 3:
+  //       type = '5';
+  //       break;
+  //     case 4:
+  //       type = '10';
+  //       break;
+  //     case 5:
+  //       type = '30';
+  //       break;
+  //     case 6:
+  //       type = '60';
+  //       break;
+  //     case 7:
+  //       type = '';
+  //       break;
+  //     default:
+  //   }
+  //   var time = new DateTime.now().millisecondsSinceEpoch;
 
-    Response response = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=${type}&_=${time}");
-    Response res = await dio.get("https://tt3.anrunjf.com/quota/quota/getQuotaDataAllByWeb.do?contractsCode=${id}&_=${time}");
-    setState(() {
-      lines.clear();
-      var data = jsonDecode(response.data);
-      detail = jsonDecode(res.data)["data"];
-      color = detail["upDropPrice"] < 0 ? Colors.green : Colors.red;
-      lines.addAll(data["data"]);
-      getKlineDataList(lines);
-      _currentDataType = _timeIndex[index];
-    });
+  //   // Response response = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=${type}&_=${time}");
+  //   Response response = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=&_=${time}");
+  //   Response response1 = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=1&_=${time}");
+  //   Response response3 = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=3&_=${time}");
+  //   Response response5 = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=5&_=${time}");
+  //   Response response10 = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=10&_=${time}");
+  //   Response response30 = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=30&_=${time}");
+  //   Response response60 = await dio.get("https://tt3.anrunjf.com/quota/candlestickData/getCandlesticKData.do?contractsCode=${id}&type=60&_=${time}");
+  //   Response res = await dio.get("https://tt3.anrunjf.com/quota/quota/getQuotaDataAllByWeb.do?contractsCode=${id}&_=${time}");
+  //   setState(() {
+  //     // lines.clear();
+  //     // var data = jsonDecode(response.data);
+  //     // detail = jsonDecode(res.data)["data"];
+  //     // color = detail["upDropPrice"] < 0 ? Colors.green : Colors.red;
+  //     // lines.addAll(data["data"]);
+  //     // getKlineDataList(lines);
+  //     // _currentDataType = _timeIndex[index];
+
+  //     postApi({
+  //       'detail': jsonDecode(res.data)["data"],
+  //       'day':jsonDecode(response.data)["data"],
+  //       '1min':jsonDecode(response1.data)["data"],
+  //       '3min':jsonDecode(response3.data)["data"],
+  //       '5min':jsonDecode(response5.data)["data"],
+  //       '10min':jsonDecode(response10.data)["data"],
+  //       '30min':jsonDecode(response30.data)["data"],
+  //       '60min':jsonDecode(response60.data)["data"],
+  //     });
+  //   });
+  // }
+
+
+  Future<void> getKDataList()async {
+    try {
+      Map<String, dynamic> httpHeaders = {
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+        };
+        Options options = Options(headers:httpHeaders);
+        Response response = await Dio().get(
+            "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/marketdetail_${id}",
+            options: options,
+        );
+        print(response.data);
+        setState(() {
+          detail = response.data["results"][0]["detail"];
+          allklist = response.data["results"][0];
+          getKlineDataList(allklist["1min"]);
+          _currentDataType = _timeIndex[1];
+        });
+    } catch (e) {
+      print('ffff');
+    }
+  }
+
+  changeTab(index) {
+     var type = '1min';
+      switch (index) {
+        case 1:
+          type = '1min';
+          break;
+        case 2:
+          type = '3min';
+          break;
+        case 3:
+          type = '5min';
+          break;
+        case 4:
+          type = '10min';
+          break;
+        case 5:
+          type = '30min';
+          break;
+        case 6:
+          type = '60min';
+          break;
+        case 7:
+          type = 'day';
+          break;
+        default:
+      }
+      setState(() {
+        getKlineDataList(allklist[type]);
+          _currentDataType = _timeIndex[index];
+      });
   }
 
   // _randomBit(int len) {
@@ -395,7 +464,7 @@ class _MarketInfoDetailState extends State<MarketInfoDetail> with TickerProvider
                     ],
                     onTap: (index) {
                       setState(() {
-                        getKDataList(index);
+                        changeTab(index);
                       });
                     },
                   ),

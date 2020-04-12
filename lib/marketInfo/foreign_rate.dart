@@ -22,148 +22,23 @@ class ForeignScreenState extends State<ForeignScreen> {
   bool empty = false;
 
 
-  var nameList = [
-  {
-    'id': 1,
-    'name': '美元',
-    'subname': 'USD',
-  },
-  {
-    'id':2,
-    'name': '日元',
-    'subname': 'JPY',
-  },
-  {
-    'name': '英镑',
-    'subname': 'GBP',
-    'id':3,
-  },
-  {
-    'name': '港币',
-    'subname': 'HKD',
-    'id': 4,
-  },
-  {
-    'name': '欧元',
-    'subname': 'EUR',
-    'id': 5,
-  },
-  {
-    'name': '加元',
-    'subname': 'CAD',
-    'id':6,
-  },
-   {
-    'name': '瑞典克朗',
-    'subname': 'SEK',
-    'id': 7,
-  },
-   {
-    'name': '丹麦克朗',
-    'subname': 'DKK',
-    'id': 8,
-  },
-  {
-    'name': '挪威克朗',
-    'subname': 'NOK',
-    'id': 9,
-  },
-  {
-    'name': '新加坡币',
-    'subname': 'SGD',
-    'id':10,
-  },
-  
-  {
-    'name': '澳元',
-    'subname': 'AUD',
-    'id': 11,
-  },
-  
-  {
-    'name': '瑞士法郎',
-    'subname': 'CHF',
-    'id': 12,
-  },
-    {
-    'name': '澳门币',
-    'subname': 'MOP',
-    'id': 13,
-  },
-   {
-    'name': '菲律宾比索',
-    'subname': 'PHP',
-    'id': 14,
-  },
 
-  {
-    'name': '泰铢',
-    'subname': 'THB',
-    'id': 15,
-  },
-   
-  {
-    'name': '新西兰币',
-    'subname': 'NZD',
-    'id': 16,
-  },
-  {
-    'name': '韩元',
-    'subname': 'KRW',
-    'id': 17,
-  },
-  {
-    'name': '卢布',
-    'subname': 'RUB',
-    'id': 18,
-  },
-];
-
-
-  Future<void> onRefreshing() async {
+  Future<void> onRefreshing()async {
     try {
       Map<String, dynamic> httpHeaders = {
-          'X-LC-Id': 'pIwJE5YdPiyFKg2X9uolEcqz-MdYXbMMI',
-          'X-LC-Key': 'sfIJshbqRGbP3nJpQgBL0QJo',
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
         };
         Options options = Options(headers:httpHeaders);
         Response response = await Dio().get(
-            "https://piwje5yd.api.lncldglobal.com/1.1/classes/quota/5e8eb612a5a0f50008a4265a",
-            options: options
+            "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/rate",
+            options: options,
         );
-
-      if (mounted) {
-        var l = [];
-          nameList.forEach((value) {
-            response.data["rate"].forEach((val) {
-              if(val["fiCurrencyId"] == value["id"] ){
-                l.add(
-                  {
-                    'id': value['id'],
-                    'name': value["name"],
-                    'subname': value["subname"],
-                    "fiCurrencyId": val["fiCurrencyId"],
-                    "flBuyingRate": val["flBuyingRate"],
-                    "flCashBuyingRate": val["flCashBuyingRate"],
-                    "flSellingRate": val["flSellingRate"],
-                    "flCashSellingRate": val["flCashSellingRate"],
-                    "fdPublishDate": val["fdPublishDate"],
-                  }
-                );
-              }
-            });
-          });
         setState(() {
-          toolList = l;
+          toolList = response.data["results"];
         });
-      }
-
     } catch (e) {
-      print(e);
-      print('的点点滴滴');
-      setState(() {
-        empty = true;
-      });
+      print('ffff');
     }
   }
 

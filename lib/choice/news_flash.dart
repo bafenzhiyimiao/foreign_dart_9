@@ -17,28 +17,19 @@ class NewsFlash extends StatefulWidget {
 class NewsFlashState extends State<NewsFlash> {
   // 总数
   var list = [];
-  var time = '';
+  var page = 1;
 
   Future<void> onRefreshing() async {
     list.clear();
     try {
-      Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.4.0',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.0'
-      };
-      Options options = Options(headers:httpHeaders);
       Response response = await Dio().get(
-          "https://flash-api.jin10.com/get_flash_list",
-          options: options
+          "https://openapi.pubhx.com/hx/?service=Advisory.quickList&companyId=9&page=1&pagesize=20&userCookie=",
       );
       if (mounted) {
         print(response);
         setState(() {
-          list.addAll(response.data['data']);
-          time = list.last["time"];
+          list.addAll(response.data['data']["list"]);
+          page = 2;
         });
       }
 
@@ -49,23 +40,14 @@ class NewsFlashState extends State<NewsFlash> {
 
   Future<void> onLding() async {
     try {
-      Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.4.0',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.0'
-      };
-      Options options = Options(headers:httpHeaders);
       Response response = await Dio().get(
-          "https://flash-api.jin10.com/get_flash_list?max_time=${time}",
-          options: options
+          "https://openapi.pubhx.com/hx/?service=Advisory.quickList&companyId=9&page=${page}&pagesize=20&userCookie=",
       );
       if (mounted) {
         print(response);
         setState(() {
-          list.addAll(response.data['data']);
-          time = list.last["time"];
+          list.addAll(response.data['data']["list"]);
+          page = page +1;
         });
       }
 
@@ -86,7 +68,6 @@ class NewsFlashState extends State<NewsFlash> {
   Widget build(BuildContext context) {
 
     if(list.isNotEmpty) {
-
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         body: EasyRefresh.custom(
@@ -100,9 +81,6 @@ class NewsFlashState extends State<NewsFlash> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                   (context, i) {
-                    if(list[i]["type"] != 0) {
-                      return Container(height: 0,);
-                    }
                     return  Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -159,7 +137,7 @@ class NewsFlashState extends State<NewsFlash> {
                                         ),
                                         child: new Text(
                                           list.isNotEmpty
-                                              ? TimelineUtil.format(DateTime.parse(list[i]["time"]).millisecondsSinceEpoch,
+                                              ? TimelineUtil.format(DateTime.parse(list[i]["ctime"]).millisecondsSinceEpoch,
                                                 dayFormat: DayFormat.Full)
                                               : '',
                                           style: new TextStyle(color: Colors.blueGrey, fontSize: 10.0),
@@ -202,19 +180,9 @@ class NewsFlashState extends State<NewsFlash> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Html(
-                                      data:list.isNotEmpty != null  && list[i]["data"]["content"] != null ? list[i]["data"]["content"].replaceAll('金十', '期货') : '',
-                                      defaultTextStyle: TextStyle(
-                                        fontFamily: 'serif',
-                                        fontSize: 13
-                                      ),
-                                      backgroundColor: Theme.of(context).backgroundColor,
-                                    ),
-                                    list[i]["data"]["pic"] != '' ? Image(
-                                      image: NetworkImage(list[i]["data"]["pic"] ),
-                                      height: 90,
-                                      fit: BoxFit.fitHeight,
-                                    ) :Container(),
+                                    Text(
+                                      list.isNotEmpty != null  && list[i]["title"] != null? list[i]["title"] : '',
+                                    )
                                   ],
                                 )
                                 

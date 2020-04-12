@@ -1,10 +1,11 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:dio/dio.dart';
 import 'package:flustars/flustars.dart';
 import 'package:html/dom.dart' as dom;
+import 'package:futures/global.dart';
+
 
 class NewsDetail extends StatefulWidget {
   final id;
@@ -22,19 +23,18 @@ class NewsDetailState extends State<NewsDetail> {
 
   var detail;
   var list;
-
+  bool iscollect = false;
 
 
   Future<void> onRefreshing() async {
     try {
       Response response = await Dio().get(
-          "http://news.taoketong.cc//api/articledetail?id=${id}&language",
+          "https://news.followme.com/api/v1/news/${id}/content",
       );
       if (mounted) {
         setState(() {
-          detail = response.data;
+          detail = response.data["data"];
         });
-        print(response.data);
       }
 
     } catch (e) {
@@ -43,12 +43,27 @@ class NewsDetailState extends State<NewsDetail> {
     setState(() {});
   }
 
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     onRefreshing();
+    LocalStorage.getJSON('collect').then((arr) {
+      if(arr == null) {
+        return;
+      }
+      arr.forEach((v){
+        if(v['id'] == id) {
+          setState(() {
+            iscollect = true;
+          });
+        }
+      });
+    });
   }
+
+  
 
 
  
@@ -58,17 +73,74 @@ class NewsDetailState extends State<NewsDetail> {
 
     return new Scaffold(
         appBar: AppBar(
-          title: Text('',),
-          backgroundColor: Theme.of(context).backgroundColor,
+          title: Text('',style: TextStyle(color: Colors.black87,fontSize: 18),),
+          backgroundColor: Theme.of(context).cardColor,
           elevation: 0.1,
-          
           leading: new IconButton(
             icon: new Image.asset('assets/left.jpg',
                 width: 11, height: 20),
-                
-          
             onPressed: () => Navigator.of(context).pop(),
           ),
+          actions: <Widget>[
+            Container(
+              padding: EdgeInsets.only(right: 15),
+              child: Center(
+                child: !iscollect ? GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      LocalStorage.getJSON('collect').then((val){
+                        if(val == null) {
+                          var str = [detail];
+                          LocalStorage.setJSON('collect', str);
+                        }else {
+                          var str = val;
+                          str.add(detail);
+                          LocalStorage.setJSON('collect', str);
+                        }
+                      });
+                      setState(() {
+                        iscollect = !iscollect;
+                      });
+                      print('sss');
+                    },
+                    child: Container(
+                      width: 16,
+                      height: 16,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        "assets/sc.jpg",
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  ) : GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      LocalStorage.getJSON('collect').then((val){
+                        var arr = [];
+                        val.forEach((w) => {
+                          if(w['id']!= detail['id']) {
+                            arr.add(w)
+                          }
+                        });
+                        LocalStorage.setJSON('collect', arr == null ? [] : arr);
+                      });
+                      setState(() {
+                        iscollect = !iscollect;
+                      });
+                    },
+                    child: Container(
+                      width: 16,
+                      height: 16,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        "assets/sc_a.jpg",
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  ),
+              )
+            )
+          ],
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         body: detail != null ? ListView(
@@ -87,29 +159,21 @@ class NewsDetailState extends State<NewsDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 new Text(
-                  TimelineUtil.format(DateTime.parse(detail["created"]).millisecondsSinceEpoch,
+                  TimelineUtil.format(detail["create_time"] * 1000,
                         dayFormat: DayFormat.Full),
                   style: new TextStyle(color: Colors.grey, fontSize: 12.0),
                 ),
-                // Text(
-                //   detail["introtext"],
-                //    style: new TextStyle(color: Colors.grey, fontSize: 12.0),
-                // )
               ],
-            ),
-            Padding(padding: EdgeInsets.only(top:20),),
-
-            Image(
-              image: NetworkImage(detail["imgurl"]),
             ),
             Padding(padding: EdgeInsets.only(top:20),),
             Html(
               data: """
-                  ${detail != null ? detail["introtext"] : ''}
+                  ${detail != null ? detail["content"] : ''}
                 """,
               defaultTextStyle: TextStyle(
                 fontFamily: 'serif',
               ),
+              backgroundColor: Theme.of(context).backgroundColor,
                customTextStyle:
                     (dom.Node node, TextStyle baseStyle) {
                   if (node is dom.Element) {
@@ -126,22 +190,19 @@ class NewsDetailState extends State<NewsDetail> {
                     switch (node.localName) {
                       // case "p":
                       //   return Padding(
-                      //     child: Text(node.text.replaceAll('鑫汇宝贵金属', '')),
+                      //     child: Text(node.text.replaceAll('', '')),
                       //     padding:
                       //         const EdgeInsets.fromLTRB(0, 5, 0, 5),
                       //   );
-                      case "a":
-                        return Text(
-                          node.text,
-                          style: TextStyle(color: Colors.blue),
-                        );
+                      // case "a":
+                      //   return Text(
+                      //     node.text,
+                      //     style: TextStyle(color: Colors.blue),
+                      //   );
                       case "hr":
                         return Divider(
                           height: 20,
                         );
-                    }
-                    if(node.text == '鑫汇宝贵金属') {
-                      return Text('');
                     }
                   }
                 }

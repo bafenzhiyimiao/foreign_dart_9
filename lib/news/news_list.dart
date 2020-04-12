@@ -26,12 +26,12 @@ class NewsListState extends State<NewsList> {
     list.clear();
     try {
       Response response = await Dio().get(
-          "http://news.taoketong.cc//api/articlelist?catid=${catid}&number=20&page=1",
+          "https://news.followme.com/api/v1/news/${catid}/list?&cid=${catid}&page=1&size=15",
       );
       if (mounted) {
         // var res = jsonDecode(response.data);
         setState(() {
-          list.addAll(response.data);
+          list.addAll(response.data["data"]["items"]);
           page = 2;
         });
       }
@@ -45,12 +45,12 @@ class NewsListState extends State<NewsList> {
   Future<void> onLding() async {
     try {
       Response response = await Dio().get(
-          "http://news.taoketong.cc//api/articlelist?catid=${catid}&number=20&page=${page}",
+          "https://news.followme.com/api/v1/news/${catid}/list?&cid=11&page=${page}&size=15",
       );
       if (mounted) {
         // var res = jsonDecode(response.data);
         setState(() {
-          list.addAll(response.data);
+          list.addAll(response.data["data"]["items"]);
           page = page +1;
         });
       }
@@ -126,7 +126,7 @@ class NewsListState extends State<NewsList> {
                                         children: <Widget>[
                                            new Text(
                                           list.isNotEmpty
-                                              ? TimelineUtil.format(DateTime.parse(list[i]["created"]).millisecondsSinceEpoch,
+                                              ? TimelineUtil.format(list[i]["create_time"]*1000,
                                                 dayFormat: DayFormat.Full)
                                               : '',
                                           style: new TextStyle(color: Colors.grey, fontSize: 12.0),
@@ -144,7 +144,7 @@ class NewsListState extends State<NewsList> {
                                   width: 90,
                                 fit: BoxFit.fill,
                                   image: new NetworkImage(
-                                      list.isNotEmpty? list[i]["imgurl"] : null),
+                                      list.isNotEmpty? list[i]["path"] : null),
                                   ),
                               )
                             ],

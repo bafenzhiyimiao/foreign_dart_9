@@ -27,65 +27,137 @@ class VisualScreenListState extends State<VisualScreenList> {
   var page = 1;
 
 
-  Future<void> onRefreshing() async {
-    list.clear();
+  // Future<void> onRefreshing() async {
+  //   list.clear();
+  //   try {
+  //     Map<String, dynamic> httpHeaders = {
+  //       'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
+  //       'x-app-ver': 'ios_base_4.3.2',
+  //       'x-token': '',
+  //       'x-app-id': 'g93rhHb9DcDptyPb',
+  //       'x-version':'1.0.1'
+  //     };
+  //     Options options = Options(headers:httpHeaders);
+  //     Response response = await Dio().get(
+  //         "https://reference-api.jin10.com/reference/getByCategoryId?category_id=${id}&page=1&page_size=20&types=video",
+  //         // https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=11406&root_id=0&type=video
+  //         options: options,
+  //     );
+  //     if (mounted) {
+  //       setState(() {
+  //         list = response.data["data"]["list"];
+  //         page = 2;
+  //       });
+  //       list.forEach((val) {
+  //         postApi(val);
+  //       });
+  //     }
+
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+
+
+  // Future<void> onRefres(vid) async {
+  //   try {
+  //     Map<String, dynamic> httpHeaders = {
+  //       'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
+  //       'x-app-ver': 'ios_base_4.3.2',
+  //       'x-token': '',
+  //       'x-app-id': 'g93rhHb9DcDptyPb',
+  //       'x-version':'1.0.1'
+  //     };
+  //     Map<String, dynamic> httpHeaders2 = {
+  //       'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
+  //       'x-app-ver': 'ios_base_4.4.0',
+  //       'x-token': '',
+  //       'x-app-id': 'g93rhHb9DcDptyPb',
+  //       'x-version':'1.0.0'
+  //     };
+  //     Options options = Options(headers:httpHeaders);
+  //     Options options2 = Options(headers:httpHeaders2);
+  //     Response response = await Dio().get(
+  //         "https://reference-api.jin10.com/reference/getOne?id=${vid.toString()}&type=video",
+  //         options: options,
+  //     );
+  //     Response res = await Dio().get(
+  //         "https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=${vid}&root_id=0&type=video",
+  //         options: options2,
+  //     );
+  //     if (mounted) {
+  //       // setState(() {
+  //       //   detail = response.data["data"];
+  //       //   comments = res.data["data"]["items"] != null ? res.data["data"]["items"] : [];
+  //       //   );
+  //       // });
+  //       postapi(
+  //         {
+  //           'detail': response.data["data"],
+  //           'comment': res.data["data"]["items"],
+  //           "id": response.data["data"]["id"]
+  //         }
+  //       );
+
+  //       print(response.data["data"]['id']);
+  //     }
+
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+
+
+  // Future<void> postapi(data)async {
+  //   try {
+  //     Map<String, dynamic> httpHeaders = {
+  //         'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+  //         'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+  //       };
+  //       Options options = Options(headers:httpHeaders);
+  //       Response response = await Dio().post(
+  //           "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/video_${id}_detail",
+  //           options: options,
+  //           data: data,
+  //       );
+
+  //   } catch (e) {
+  //     print('fffff');
+  //   }
+  // }
+
+
+
+
+
+  Future<void> onRefreshing()async {
     try {
       Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.3.2',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.1'
-      };
-      Options options = Options(headers:httpHeaders);
-      Response response = await Dio().get(
-          "https://reference-api.jin10.com/reference/getByCategoryId?category_id=${id}&page=1&page_size=20&types=video",
-          // https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=11406&root_id=0&type=video
-          options: options,
-      );
-      if (mounted) {
-        // // var res = jsonDecode(response.data);
-        setState(() {
-          list = response.data["data"]["list"];
-          page = 2;
-        });
-      }
+          'X-LC-Id': 'jRGsn1jcAKTcSonNoAGqNFk3-MdYXbMMI',
+          'X-LC-Key': 'g7jhcAye3Jls5PpxY4zC8O2e',
+        };
+        Options options = Options(headers:httpHeaders);
+        Response response = await Dio().get(
+            "https://jrgsn1jc.api.lncldglobal.com/1.1/classes/video_${id}",
+            options: options,
+        );
+        if (mounted) {
+          setState(() {
+            list = response.data["results"];
+          });
+        }
 
     } catch (e) {
-      print(e);
+      print('ffff');
     }
   }
 
 
-  Future<void> onLding() async {
-    try {
-      Map<String, dynamic> httpHeaders = {
-        'x-udid': '6aba6d51a0e4e8f2e8e508c9a946fcba0abb9c06',
-        'x-app-ver': 'ios_base_4.3.2',
-        'x-token': '',
-        'x-app-id': 'g93rhHb9DcDptyPb',
-        'x-version':'1.0.1'
-      };
-      Options options = Options(headers:httpHeaders);
-      Response response = await Dio().get(
-          "https://reference-api.jin10.com/reference/getByCategoryId?category_id=${id}&page=${page}&page_size=20&types=video",
-          // https://comment-api.jin10.com/list?isgood=0&lastId=0&limit=20&object_id=11406&root_id=0&type=video
-          options: options,
-      );
-      if (mounted) {
-        // // var res = jsonDecode(response.data);
-        setState(() {
-          list.addAll(response.data["data"]["list"]);
-          page = page + 1;
-        });
-      }
-
-    } catch (e) {
-      print(e);
-    }
-  }
 
   
+
 
   @override
   void initState() {
@@ -97,8 +169,6 @@ class VisualScreenListState extends State<VisualScreenList> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(list.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(
           title: Text(name,style: TextStyle(fontSize: 18),),
@@ -111,12 +181,12 @@ class VisualScreenListState extends State<VisualScreenList> {
           ),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: EasyRefresh.custom(
+        body:list.isNotEmpty ?   EasyRefresh.custom(
           onRefresh: () async {
              this.onRefreshing();
           },
           onLoad: () async {
-            this.onLding();
+            // this.onLding();
           },
           slivers: <Widget>[
             SliverList(
@@ -127,7 +197,7 @@ class VisualScreenListState extends State<VisualScreenList> {
                           onTap: () {
                               Navigator.of(context,rootNavigator: true).push(
                                 new MaterialPageRoute(builder: (BuildContext context) {
-                                return new VisualScreenDetail(id:list[i]["id"]);
+                                return new VisualScreenDetail(id:list[i]["id"], groupid: id,);
                               }));
                           },
                           child: Container(
@@ -165,12 +235,7 @@ class VisualScreenListState extends State<VisualScreenList> {
               ),
             ),
           ],
-        ),
+        ): Container(height: 0,) ,
       );
-    }else {
-      return Center(
-          
-        ); 
-    }
   }
 }
