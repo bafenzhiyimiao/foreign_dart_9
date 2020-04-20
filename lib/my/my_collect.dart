@@ -37,7 +37,6 @@ class CollectScreenState extends State<CollectScreen> {
   void initState() {
     super.initState();
     onRefreshing();
-    LocalStorage.clear();
   }
 
 
